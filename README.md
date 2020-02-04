@@ -1,11 +1,36 @@
-# Pixelorama - your free and open-source sprite editor!
- Your free & open-source 2D sprite editor, made by Orama Interactive in the Godot Engine, using GDScript!
-
-[![Discord Server](https://discordapp.com/api/guilds/645793202393186339/embed.png)](https://discord.gg/GTMtr8s)
+<p align="center">
+    <h1 align = "center">Pixelorama - your free and open-source sprite editor!</h1>
+</p>
+<p align="center">
+    Made by Orama Interactive with the Godot Engine, written in GDScript!
+</p>
+ <p align="center">  
+    <a href="https://github.com/Orama-Interactive/Pixelorama">
+        <img src="https://img.shields.io/github/languages/code-size/Orama-Interactive/Pixelorama.svg" alt="Code Size" />
+    </a>
+    <a href="https://github.com/Orama-Interactive/Pixelorama">
+        <img src="https://img.shields.io/github/repo-size/Orama-Interactive/Pixelorama.svg" alt="Repository size" />
+    </a>
+    <a href="https://discord.gg/GTMtr8s">
+        <img src="https://discordapp.com/api/guilds/645793202393186339/embed.png" alt="Discord Chat" />
+    </a>
+    <a href="https://crowdin.com/project/pixelorama">
+        <img src="https://badges.crowdin.net/pixelorama/localized.svg" alt="Crowdin Localized %" />
+    </a>
+    <a href="https://github.com/Calinou/awesome-godot">
+        <img src="https://awesome.re/mentioned-badge.svg" alt="Mentioned in Awesome Godot" />
+    </a>
+    <a href="https://github.com/Orama-Interactive/Pixelorama/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/Orama-Interactive/Pixelorama.svg" alt="License" />
+    </a>
+</p>
  
- [![Pixelorama's UI](https://static.wixstatic.com/media/cc6108_ccec89c37b3d425da4f03776160c859c~mv2.png)](https://www.youtube.com/watch?v=DULv-jzueRw&list=PLVEP1Zz6BUpBiQC0CB6eNBhhLF4tEwBB-&index=7)
+[![Pixelorama's UI](https://static.wixstatic.com/media/cc6108_ccec89c37b3d425da4f03776160c859c~mv2.png)](https://www.youtube.com/watch?v=DULv-jzueRw&list=PLVEP1Zz6BUpBiQC0CB6eNBhhLF4tEwBB-&index=7)
 
-Current features as of version v0.6.1:
+## Dependencies
+Pixelorama uses Godot 3.2. As of right now, all of the code is written using GDScript, so the mono version of Godot is not required, but Pixelorama should also work with it.
+
+## Current features as of version v0.6.1:
 
 - Choosing between 6 tools – pencil, eraser, fill bucket, lighten/darken, color picker and rectangle select – and mapping them to both of your left and right mouse buttons.
 - Are you an animator? Then you've come to the right place! Pixelorama has its own animation timeline with Onion Skinning just for you!

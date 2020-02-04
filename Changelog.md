@@ -5,9 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [v0.6.2] - Unreleased
 
+## Added
+- Crowdin integration for contributing translations!
+- Spanish translation - thanks to azagaya!
+- Translators can now be seen in the About window.
+- It is now possible to remove custom brushes with the middle mouse button.
+- Added HSV mode to the color picker. (Added automatically because of the Godot 3.2 update)
+
+## Changed
+- Updates to the Greek, Russian and Traditional Chinese translations.
+- Replaced some OS alerts with a custom made error dialog.
+- Made the "X" button on the custom brushes a little smaller.
+- The color picker will now have a small white triangle on the top left of the color preview if at least one of its RGB values are above 1 in Raw mode. (Added automatically because of the Godot 3.2 update)
+- You can now toggle the visibility of hidden items on and off in the file dialogs. (Added automatically because of the Godot 3.2 update)
+
 ### Fixed
 - Delay the splash screen popup so it shows properly centered (thanks to YeldhamDev)
 - Possibly fixed crashes with motion drawing and undo/redoing.
+- Fixed bug (which also caused crashes sometimes) when generating an outline inside the image and it was going outside the canvas' borders.
+- Fixed crash when importing images that were failing to load. They still fail to load, but Pixelorama does not crash.
 
 ## [v0.6.1] - 13-01-2020
 

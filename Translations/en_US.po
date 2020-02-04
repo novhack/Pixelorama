@@ -1,5 +1,14 @@
 msgid ""
 msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: pixelorama\n"
+"X-Crowdin-Language: en\n"
+"X-Crowdin-File: /master/Translations/Translations.pot\n"
+"Project-Id-Version: pixelorama\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"PO-Revision-Date: 2020-01-26 21:58\n"
 
 msgid "OK"
 msgstr ""
@@ -119,10 +128,10 @@ msgid "Open File(s)"
 msgstr ""
 
 msgid "IMPORT_FILE_LABEL"
-msgstr ""
+msgstr "Import as new frame"
 
 msgid "IMPORT_SPRITESHEET"
-msgstr ""
+msgstr "Import as a spritesheet"
 
 msgid "Save Sprite as .pxo"
 msgstr ""
@@ -144,13 +153,13 @@ msgid "Resize:"
 msgstr ""
 
 msgid "EXPORT_CURRENT_FRAME_LABEL"
-msgstr ""
+msgstr "Export current frame"
 
 msgid "EXPORT_FRAMES_AS_MULTIPLE_FILES_LABEL"
-msgstr ""
+msgstr "Export all frames as multiple files"
 
 msgid "EXPORT_FRAMES_AS_SPRITESHEET_LABEL"
-msgstr ""
+msgstr "Export all frames as a spritesheet (single file)"
 
 msgid "Columns"
 msgstr ""
@@ -255,7 +264,7 @@ msgid "About Pixelorama"
 msgstr ""
 
 msgid "MADEBY_LABEL"
-msgstr ""
+msgstr "Developed by Orama Interactive"
 
 msgid "Website"
 msgstr ""
@@ -330,43 +339,60 @@ msgid "copy"
 msgstr ""
 
 msgid "QUIT_LABEL"
-msgstr ""
+msgstr "Are you sure you want to exit Pixelorama?"
 
 msgid "Utility Tools"
 msgstr ""
 
 msgid "RECTSELECT_HT"
-msgstr ""
+msgstr "Rectangular Selection\n\n"
+"R for left mouse button\n"
+"Alt + R for right mouse button\n\n"
+"Press Shift to move the content"
 
 msgid "COLORPICKER_HT"
-msgstr ""
+msgstr "Color Picker\n"
+"Select a color from a pixel of the sprite\n\n"
+"O for left mouse button\n"
+"Alt + O for right mouse button"
 
 msgid "Draw Tools"
 msgstr ""
 
 msgid "PENCIL_HT"
-msgstr ""
+msgstr "Pencil\n\n"
+"P for left mouse button\n"
+"Alt + P for right mouse button\n\n"
+"Hold Shift to make a line"
 
 msgid "ERASER_HT"
-msgstr ""
+msgstr "Eraser\n\n"
+"E for left mouse button\n"
+"Alt + E for right mouse button\n\n"
+"Hold Shift to make a line"
 
 msgid "BUCKET_HT"
-msgstr ""
+msgstr "Bucket\n\n"
+"B for left mouse button\n"
+"Alt + B for right mouse button"
 
 msgid "LD_HT"
-msgstr ""
+msgstr "Lighten/Darken\n\n"
+"U for left mouse button\n"
+"Alt + U for right mouse button"
 
 msgid "LEFTCOLOR_HT"
-msgstr ""
+msgstr "Choose a color for the left tool"
 
 msgid "RIGHTCOLOR_HT"
-msgstr ""
+msgstr "Choose a color for the right tool"
 
 msgid "COLORSWITCH_HT"
-msgstr ""
+msgstr "Switch left and right colors\n"
+"(X)"
 
 msgid "COLORDEFAULTS_HT"
-msgstr ""
+msgstr "Reset the colors to their default state (black for left, white for right)"
 
 msgid "Raw Mode"
 msgstr ""
@@ -381,10 +407,10 @@ msgid "Left pixel indicator"
 msgstr ""
 
 msgid "LEFT_INDIC_HT"
-msgstr ""
+msgstr "Show left mouse pixel indicator or brush on the canvas when drawing"
 
 msgid "RIGHT_INDIC_HT"
-msgstr ""
+msgstr "Show right mouse pixel indicator or brush on the canvas when drawing"
 
 msgid "Show tool icon"
 msgstr ""
@@ -396,7 +422,7 @@ msgid "Brush:"
 msgstr ""
 
 msgid "BRUSH_HT"
-msgstr ""
+msgstr "Select a brush"
 
 msgid "Brush: Pixel"
 msgstr ""
@@ -417,7 +443,7 @@ msgid "Brush color from"
 msgstr ""
 
 msgid "COLORFROM_HT"
-msgstr ""
+msgstr "0: Color from the brush itself, 100: the currently selected color"
 
 msgid "Fill area:"
 msgstr ""
@@ -438,7 +464,7 @@ msgid "Amount:"
 msgstr ""
 
 msgid "LDAMOUNT_HT"
-msgstr ""
+msgstr "Lighten/Darken amount"
 
 msgid "Pick for:"
 msgstr ""
@@ -456,10 +482,10 @@ msgid "Horizontal"
 msgstr ""
 
 msgid "HORIZMIRROR_HT"
-msgstr ""
+msgstr "Enable horizontal mirrored drawing"
 
 msgid "VERTMIRROR_HT"
-msgstr ""
+msgstr "Enable vertical mirrored drawing"
 
 msgid "Vertical"
 msgstr ""
@@ -471,25 +497,32 @@ msgid "Current frame: 1/1"
 msgstr ""
 
 msgid "FIRSTFRAME_HT"
-msgstr ""
+msgstr "Jump to the first frame\n"
+"(Ctrl+Home)"
 
 msgid "PREVIOUSFRAME_HT"
-msgstr ""
+msgstr "Go to the previous frame\n"
+"(Ctrl+Left)"
 
 msgid "PLAYBACKWARDS_HT"
-msgstr ""
+msgstr "Play the animation backwards (from end to beginning)\n"
+"(F4)"
 
 msgid "PLAYFORWARD_HT"
-msgstr ""
+msgstr "Play the animation forward (from beginning to end)\n"
+"(F5)"
 
 msgid "NEXTFRAME_HT"
-msgstr ""
+msgstr "Go to the next frame\n"
+"(Ctrl+Right)"
 
 msgid "LASTFRAME_HT"
-msgstr ""
+msgstr "Jump to the last frame\n"
+"(Ctrl+End)"
 
 msgid "FPS_HT"
-msgstr ""
+msgstr "How many frames per second should the animation preview be?\n"
+"The more FPS, the faster the animation plays."
 
 msgid "No loop"
 msgstr ""
@@ -534,28 +567,28 @@ msgid "Layers"
 msgstr ""
 
 msgid "LAYERNEW_HT"
-msgstr ""
+msgstr "Create a new layer"
 
 msgid "LAYERREMOVE_HT"
-msgstr ""
+msgstr "Remove current layer"
 
 msgid "LAYERUP_HT"
-msgstr ""
+msgstr "Move up the current layer"
 
 msgid "LAYERDOWN_HT"
-msgstr ""
+msgstr "Move down the current layer"
 
 msgid "LAYERCLONE_HT"
-msgstr ""
+msgstr "Clone current layer"
 
 msgid "LAYERMERGE_HT"
-msgstr ""
+msgstr "Merge current layer with the one below"
 
 msgid "Opacity:"
 msgstr ""
 
 msgid "LAYERVISIBILITY_HT"
-msgstr ""
+msgstr "Toggle layer's visibility"
 
 msgid "Palette"
 msgstr ""
@@ -564,13 +597,13 @@ msgid "Palettes"
 msgstr ""
 
 msgid "NEWPALETTE_HT"
-msgstr ""
+msgstr "Add a new palette"
 
 msgid "EDITPALETTE_HT"
-msgstr ""
+msgstr "Edit currently selected palette"
 
 msgid "CHOOSEPALETTE_HT"
-msgstr ""
+msgstr "Choose a palette"
 
 msgid "Undo: Draw"
 msgstr ""
@@ -709,3 +742,4 @@ msgstr ""
 
 msgid "Default Fill Color:"
 msgstr ""
+

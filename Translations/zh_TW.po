@@ -1,12 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Pixelorama\n"
-"Last-Translator: JunYouIntrovert\n"
-"Language-Team: none\n"
-"Language: zh_TW\n"
-"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: pixelorama\n"
+"X-Crowdin-Language: zh-TW\n"
+"X-Crowdin-File: /master/Translations/Translations.pot\n"
+"Project-Id-Version: pixelorama\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Chinese Traditional\n"
+"Language: zh_TW\n"
+"PO-Revision-Date: 2020-01-26 21:58\n"
 
 msgid "OK"
 msgstr "OK"
@@ -89,6 +91,9 @@ msgstr "調整尺寸"
 msgid "Crop Image"
 msgstr "擷取部分圖片"
 
+msgid "Rotate Image"
+msgstr ""
+
 msgid "Clear Selection"
 msgstr "清除選取區塊"
 
@@ -139,6 +144,10 @@ msgstr "輸出圖片"
 
 msgid "File Exists, Overwrite?"
 msgstr "有同名檔案，要覆蓋掉嗎"
+
+msgid "Can't load file '%s'.\n"
+"Error code: %s"
+msgstr ""
 
 msgid "Resize:"
 msgstr "調整尺寸"
@@ -272,14 +281,47 @@ msgstr "貢獻者"
 msgid "Donors"
 msgstr "捐款人"
 
+msgid "Translators"
+msgstr "翻譯人員"
+
+msgid "English"
+msgstr "英文"
+
+msgid "Greek"
+msgstr "希臘文"
+
+msgid "French"
+msgstr "法文"
+
+msgid "German"
+msgstr "德文"
+
+msgid "Polish"
+msgstr "波蘭文"
+
+msgid "Brazilian Portuguese"
+msgstr "巴西葡萄牙文"
+
+msgid "Russian"
+msgstr "俄文"
+
+msgid "Chinese Traditional"
+msgstr "繁體中文"
+
+msgid "Italian"
+msgstr "義大利文"
+
+msgid "Spanish"
+msgstr "西班牙文"
+
 msgid "Development Team"
 msgstr "開發團隊"
 
 msgid "Lead Programmer"
-msgstr ""
+msgstr "首席工程師"
 
 msgid "UI Designer"
-msgstr ""
+msgstr "UI設計師"
 
 msgid "GitHub Contributors"
 msgstr "GitHub 貢獻者"
@@ -303,19 +345,14 @@ msgid "Utility Tools"
 msgstr "其他工具"
 
 msgid "RECTSELECT_HT"
-msgstr ""
-"長方形選取\n"
-"\n"
+msgstr "長方形選取\n\n"
 "R換成左鍵\n"
-"Alt + R換成右鍵\n"
-"\n"
+"Alt + R換成右鍵\n\n"
 "按住Shift移動內容"
 
 msgid "COLORPICKER_HT"
-msgstr ""
-"撿色器\n"
-"取得圖片中某個像素的顏色\n"
-"\n"
+msgstr "撿色器\n"
+"取得圖片中某個像素的顏色\n\n"
 "O換成左鍵\n"
 "Alt + O換成右鍵"
 
@@ -323,34 +360,24 @@ msgid "Draw Tools"
 msgstr "繪製工具"
 
 msgid "PENCIL_HT"
-msgstr ""
-"鉛筆\n"
-"\n"
+msgstr "鉛筆\n\n"
 "P換成左鍵\n"
-"Alt + P換成右鍵\n"
-"\n"
+"Alt + P換成右鍵\n\n"
 "按住Shift畫直線"
 
 msgid "ERASER_HT"
-msgstr ""
-"橡皮擦\n"
-"\n"
+msgstr "橡皮擦\n\n"
 "E換成左鍵\n"
-"Alt + E換成右鍵\n"
-"\n"
+"Alt + E換成右鍵\n\n"
 "按住Shift畫直線"
 
 msgid "BUCKET_HT"
-msgstr ""
-"油漆桶\n"
-"\n"
+msgstr "油漆桶\n\n"
 "B換成左鍵\n"
 "Alt + B換成右鍵"
 
 msgid "LD_HT"
-msgstr ""
-"變亮/變暗\n"
-"\n"
+msgstr "變亮/變暗\n\n"
 "U換成左鍵\n"
 "Alt + U換成右鍵"
 
@@ -361,8 +388,7 @@ msgid "RIGHTCOLOR_HT"
 msgstr "選擇右鍵工具顏色"
 
 msgid "COLORSWITCH_HT"
-msgstr ""
-"左右工具顏色互換\n"
+msgstr "左右工具顏色互換\n"
 "(X)"
 
 msgid "COLORDEFAULTS_HT"
@@ -380,14 +406,14 @@ msgstr "右鍵工具選項"
 msgid "Left pixel indicator"
 msgstr "左鍵工具準心"
 
-msgid "Show tool icon"
-msgstr "顯示工具圖標"
-
 msgid "LEFT_INDIC_HT"
 msgstr "在畫布上顯示左鍵工具"
 
 msgid "RIGHT_INDIC_HT"
 msgstr "在畫布上顯示右鍵工具"
+
+msgid "Show tool icon"
+msgstr "顯示工具圖標"
 
 msgid "Right pixel indicator"
 msgstr "右鍵工具準心"
@@ -441,15 +467,13 @@ msgid "LDAMOUNT_HT"
 msgstr "變亮或變暗的程度"
 
 msgid "Pick for:"
-msgstr ""
+msgstr "挑選:"
 
-#, fuzzy
 msgid "Left Color"
-msgstr "顏色:"
+msgstr "左鍵工具顏色"
 
-#, fuzzy
 msgid "Right Color"
-msgstr "右鍵工具選項"
+msgstr "右鍵工具顏色"
 
 msgid "Mirroring"
 msgstr "鏡像"
@@ -473,38 +497,31 @@ msgid "Current frame: 1/1"
 msgstr "目前畫面: 1/1"
 
 msgid "FIRSTFRAME_HT"
-msgstr ""
-"跳到第一張\n"
+msgstr "跳到第一張\n"
 "(Ctrl+Home)"
 
 msgid "PREVIOUSFRAME_HT"
-msgstr ""
-"到前一張\n"
+msgstr "到前一張\n"
 "(Ctrl+Left)"
 
 msgid "PLAYBACKWARDS_HT"
-msgstr ""
-"倒著播動畫\n"
+msgstr "倒著播動畫\n"
 "(F4)"
 
 msgid "PLAYFORWARD_HT"
-msgstr ""
-"播動畫\n"
+msgstr "播動畫\n"
 "(F5)"
 
 msgid "NEXTFRAME_HT"
-msgstr ""
-"到後一張\n"
+msgstr "到後一張\n"
 "(Ctrl+Right)"
 
 msgid "LASTFRAME_HT"
-msgstr ""
-"跳到最後一張\n"
+msgstr "跳到最後一張\n"
 "(Ctrl+End)"
 
 msgid "FPS_HT"
-msgstr ""
-"動畫預覽每秒要多少張?\n"
+msgstr "動畫預覽每秒要多少張?\n"
 "FPS越高, 動畫播得越快"
 
 msgid "No loop"
@@ -679,68 +696,50 @@ msgid "Create a new empty palette?"
 msgstr "新增空的色盤?"
 
 msgid "Error: Palette must have a valid name."
-msgstr ""
+msgstr "錯誤: 色盤名字無法使用"
 
 msgid "Error: Palette named '%s' already exists!"
-msgstr ""
+msgstr "已有檔案名為 ‘%s’"
 
 msgid "Invalid Palette file!"
-msgstr ""
+msgstr "色盤檔無法使用"
 
 msgid "Edit Palette"
 msgstr "編輯色盤"
 
 msgid "Patrons:"
-msgstr ""
+msgstr "Patrons:"
 
-#, fuzzy
 msgid "Changes"
 msgstr "更新紀錄"
 
 msgid "Platinum Sponsor"
-msgstr ""
+msgstr "白金贊助人"
 
 msgid "Gold Sponsors"
-msgstr ""
+msgstr "黃金贊助人"
 
 msgid "Platinum Sponsor Placeholder"
-msgstr ""
+msgstr "白金贊助保持人"
 
 msgid "Gold Sponsors Placeholder"
-msgstr ""
+msgstr "黃金贊助保持人"
 
 msgid "Don't show again"
 msgstr "不再顯示"
 
 msgid "Take this spot!"
-msgstr ""
-
-#~ msgid "Don't show on the next startup"
-#~ msgstr "不再顯示"
-
-#~ msgid "Language:"
-#~ msgstr "語言:"
-
-#~ msgid "SPLITSCREEN_HT"
-#~ msgstr ""
-#~ "分裂畫面\n"
-#~ "\n"
-#~ "顯示兩張畫布"
-
-#~ msgid "SPLITSCREEN_HIDE_HT"
-#~ msgstr ""
-#~ "分裂畫面\n"
-#~ "\n"
-#~ "顯示一張畫布"
+msgstr "Take this spot!"
 
 msgid "Image Options"
-msgstr ""
+msgstr "圖片選項"
 
 msgid "Default Width:"
-msgstr ""
+msgstr "預設寬度:"
 
 msgid "Default Height:"
-msgstr ""
+msgstr "預設高度:"
 
 msgid "Default Fill Color:"
-msgstr ""
+msgstr "預設填充顏色:"
+

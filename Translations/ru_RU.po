@@ -1,12 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Pixelorama\n"
-"Last-Translator: AndreevAndrei\n"
-"Language-Team: none\n"
-"Language: ru\n"
-"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: pixelorama\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /master/Translations/Translations.pot\n"
+"Project-Id-Version: pixelorama\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"PO-Revision-Date: 2020-01-26 21:59\n"
 
 msgid "OK"
 msgstr "OK"
@@ -17,9 +19,8 @@ msgstr "Отмена"
 msgid "Open"
 msgstr "Открыть"
 
-#, fuzzy
 msgid "Save"
-msgstr "Сохранить..."
+msgstr "Сохранить"
 
 msgid "Please Confirm..."
 msgstr "Пожалуйста подтвердите..."
@@ -31,7 +32,7 @@ msgid "Width:"
 msgstr "Ширина:"
 
 msgid "Height:"
-msgstr "Высота"
+msgstr "Высота:"
 
 msgid "File"
 msgstr "Файл"
@@ -42,12 +43,11 @@ msgstr "Редактировать"
 msgid "View"
 msgstr "Просмотр"
 
-#, fuzzy
 msgid "Image"
-msgstr "Размер изображения"
+msgstr "Изображение"
 
 msgid "Effects"
-msgstr ""
+msgstr "Эффекты"
 
 msgid "Help"
 msgstr "Помощь"
@@ -74,7 +74,7 @@ msgid "Export PNG..."
 msgstr "Экспорт PNG..."
 
 msgid "Export PNG as..."
-msgstr "Экспортировать PNG как..."
+msgstr "Экспорт PNG как..."
 
 msgid "Quit"
 msgstr "Выйти"
@@ -86,10 +86,13 @@ msgid "Redo"
 msgstr "Повторить"
 
 msgid "Scale Image"
-msgstr "Увеличить изображение"
+msgstr "Изменить размер изображения"
 
 msgid "Crop Image"
-msgstr "Обрезать выделенное"
+msgstr "Обрезать изображение"
+
+msgid "Rotate Image"
+msgstr ""
 
 msgid "Clear Selection"
 msgstr "Снять выделение"
@@ -98,19 +101,19 @@ msgid "Flip Horizontal"
 msgstr "Отразить по горизонтали"
 
 msgid "Flip Vertical"
-msgstr "Отразить по вертикале"
+msgstr "Отразить по вертикали"
 
 msgid "Preferences"
 msgstr "Настройки"
 
 msgid "Tile Mode"
-msgstr "Замостить плиткой"
+msgstr "Бесшовный режим"
 
 msgid "Show Grid"
 msgstr "Показывать сетку"
 
 msgid "Show Rulers"
-msgstr "Показывать линейку"
+msgstr "Показывать линейки"
 
 msgid "Show Guides"
 msgstr "Показывать направляющие"
@@ -125,54 +128,53 @@ msgid "Open File(s)"
 msgstr "Открыть файл(ы)"
 
 msgid "IMPORT_FILE_LABEL"
-msgstr "Добавить как новый кадр"
+msgstr "Импортировать как новый кадр"
 
-#, fuzzy
 msgid "IMPORT_SPRITESHEET"
-msgstr "Экспорт Sprite-листа"
+msgstr ""
 
 msgid "Save Sprite as .pxo"
-msgstr "Сохранить Sprite как .pxo"
+msgstr "Сохранить спрайт как .pxo"
 
-#, fuzzy
 msgid "Export Sprite as .png"
-msgstr "Экспортировать Sprite"
+msgstr "Экспортировать спрайт как .png"
 
 msgid "Export Sprite"
-msgstr "Экспортировать Sprite"
+msgstr "Экспортировать спрайт"
 
 msgid "File Exists, Overwrite?"
+msgstr "Файл существует, перезаписать?"
+
+msgid "Can't load file '%s'.\n"
+"Error code: %s"
 msgstr ""
 
 msgid "Resize:"
-msgstr ""
+msgstr "Изменить размер:"
 
-#, fuzzy
 msgid "EXPORT_CURRENT_FRAME_LABEL"
-msgstr "Экспортировать все кадры как"
+msgstr "Экспортировать текущий кадр"
 
-#, fuzzy
 msgid "EXPORT_FRAMES_AS_MULTIPLE_FILES_LABEL"
-msgstr "Экспортировать кадры в один файл"
+msgstr "Экспортировать все кадры в отдельные файлы"
 
-#, fuzzy
 msgid "EXPORT_FRAMES_AS_SPRITESHEET_LABEL"
-msgstr "Экспорт Sprite-листа"
+msgstr ""
 
 msgid "Columns"
-msgstr ""
+msgstr "Столбцы"
 
 msgid "Rows"
-msgstr ""
+msgstr "Строки"
 
 msgid "Path:"
 msgstr "Путь:"
 
 msgid "Directories & Files:"
-msgstr "Словари и файлы:"
+msgstr "Папки и файлы:"
 
 msgid "Create Folder"
-msgstr ""
+msgstr "Создать папку"
 
 msgid "File:"
 msgstr "Файл:"
@@ -190,25 +192,22 @@ msgid "Cubic"
 msgstr "Кубический"
 
 msgid "Trilinear"
-msgstr "Трехлинейный"
+msgstr "Трилинейный"
 
-#, fuzzy
 msgid "Language"
-msgstr "Язык:"
+msgstr "Язык"
 
 msgid "Themes"
-msgstr ""
+msgstr "Темы оформления"
 
 msgid "Guides & Grid"
-msgstr ""
+msgstr "Направляющие и сетка"
 
-#, fuzzy
 msgid "Language options"
-msgstr "Язык:"
+msgstr "Настройки языка"
 
-#, fuzzy
 msgid "Theme options"
-msgstr "Настройки сетки"
+msgstr "Настройки темы"
 
 msgid "Grid options"
 msgstr "Настройки сетки"
@@ -217,14 +216,13 @@ msgid "Color:"
 msgstr "Цвет:"
 
 msgid "Guide color:"
-msgstr ""
+msgstr "Цвет направляющих:"
 
 msgid "System Language"
 msgstr "Системный язык"
 
-#, fuzzy
 msgid "Dark"
-msgstr "Затемнить"
+msgstr ""
 
 msgid "Gray"
 msgstr ""
@@ -232,18 +230,17 @@ msgstr ""
 msgid "Gold"
 msgstr ""
 
-#, fuzzy
 msgid "Light"
-msgstr "Высветлить"
+msgstr ""
 
 msgid "Invert colors"
-msgstr ""
+msgstr "Инвертировать цвета"
 
 msgid "Desaturation"
-msgstr ""
+msgstr "Обесцвечивание"
 
 msgid "Outline"
-msgstr ""
+msgstr "Обводка"
 
 msgid "Diagonal"
 msgstr ""
@@ -252,16 +249,16 @@ msgid "Place inside image"
 msgstr ""
 
 msgid "Thickness:"
-msgstr ""
+msgstr "Толщина:"
 
 msgid "View Splash Screen"
-msgstr ""
+msgstr "Экран приветствия"
 
 msgid "Issue Tracker"
-msgstr ""
+msgstr "Баг-трекер"
 
 msgid "Changelog"
-msgstr ""
+msgstr "Список изменений"
 
 msgid "About Pixelorama"
 msgstr "О Pixeloram'е"
@@ -273,10 +270,10 @@ msgid "Website"
 msgstr "Сайт"
 
 msgid "Donate"
-msgstr "Поддержать"
+msgstr "Пожертвовать"
 
 msgid "Developers"
-msgstr ""
+msgstr "Разработчики"
 
 msgid "Contributors"
 msgstr ""
@@ -284,14 +281,47 @@ msgstr ""
 msgid "Donors"
 msgstr ""
 
+msgid "Translators"
+msgstr "Переводчики"
+
+msgid "English"
+msgstr "Английский"
+
+msgid "Greek"
+msgstr "Греческий"
+
+msgid "French"
+msgstr "Французский"
+
+msgid "German"
+msgstr "Немецкий"
+
+msgid "Polish"
+msgstr "Польский"
+
+msgid "Brazilian Portuguese"
+msgstr "Бразильский португальский"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgid "Chinese Traditional"
+msgstr "Китайский (Традиционный)"
+
+msgid "Italian"
+msgstr "Итальянский"
+
+msgid "Spanish"
+msgstr "Испанский"
+
 msgid "Development Team"
-msgstr ""
+msgstr "Команда разработчиков"
 
 msgid "Lead Programmer"
-msgstr ""
+msgstr "Главный программист"
 
 msgid "UI Designer"
-msgstr ""
+msgstr "Дизайнер интерфейса"
 
 msgid "GitHub Contributors"
 msgstr ""
@@ -302,9 +332,8 @@ msgstr ""
 msgid "untitled"
 msgstr ""
 
-#, fuzzy
 msgid "imported"
-msgstr "Файл экспортирован"
+msgstr ""
 
 msgid "copy"
 msgstr ""
@@ -316,56 +345,41 @@ msgid "Utility Tools"
 msgstr "Сервисные инструменты"
 
 msgid "RECTSELECT_HT"
-msgstr ""
-"Прямоугольное выдиление\n"
-"\n"
-"R для ЛКМ\n"
-"Alt + R для ПКМ\n"
-"\n"
-"Shift для перемещения контента"
+msgstr "Прямоугольное выделение\n\n"
+"R для левой кнопки мыши\n"
+"Alt + R для правой кнопки мыши\n\n"
+"Shift для перемещения содержимого"
 
 msgid "COLORPICKER_HT"
-msgstr ""
-"Выбор цвета\n"
-"Выбрать цвет из пикселя Sprit'а\n"
-"\n"
-"O для ЛКМ\n"
-"Alt + O для ПКМ"
+msgstr "Выбор цвета\n"
+"Выбрать цвет из пикселя спрайта\n\n"
+"O для левой кнопки мыши\n"
+"Alt + O для правой кнопки мыши"
 
 msgid "Draw Tools"
 msgstr "Инструменты рисования"
 
 msgid "PENCIL_HT"
-msgstr ""
-"Карандаш\n"
-"\n"
-"P для ЛКМ\n"
-"Alt + P для ПКМ\n"
-"\n"
-"Зажать Shift для создания прямой"
+msgstr "Карандаш\n\n"
+"P для левой кнопки мыши\n"
+"Alt + P для правой кнопки мыши\n\n"
+"Зажать Shift для рисования прямой"
 
 msgid "ERASER_HT"
-msgstr ""
-"Ластик\n"
-"\n"
-"E для ЛКМ\n"
-"Alt + E для ПКМ\n"
-"\n"
-"Зажать Shift для очистки линией"
+msgstr "Ластик\n\n"
+"E для левой кнопки мыши\n"
+"Alt + E для правой кнопки мыши\n\n"
+"Зажать Shift для очистки прямой линией"
 
 msgid "BUCKET_HT"
-msgstr ""
-"Заливка\n"
-"\n"
-"B для ЛКМ\n"
-"Alt + B для ПКМ"
+msgstr "Заливка\n\n"
+"B для левой кнопки мыши\n"
+"Alt + B для правой кнопки мыши"
 
 msgid "LD_HT"
-msgstr ""
-"Высветление/Затемнение\n"
-"\n"
-"U для ЛКМ\n"
-"Alt + U ПКМ"
+msgstr "Осветление/Затемнение\n\n"
+"U для левой кнопки мыши\n"
+"Alt + U для правой кнопки мыши"
 
 msgid "LEFTCOLOR_HT"
 msgstr "Выбор цвета для левого инструмента"
@@ -374,12 +388,11 @@ msgid "RIGHTCOLOR_HT"
 msgstr "Выбор цвета для правого инструмента"
 
 msgid "COLORSWITCH_HT"
-msgstr ""
-"Поменять цвета местами\n"
+msgstr "Поменять левый и правый цвета местами\n"
 "(X)"
 
 msgid "COLORDEFAULTS_HT"
-msgstr "Сбросить цвет по умолчанию (слева черный, справа белый)"
+msgstr "Сбросить цвета по умолчанию (слева черный, справа белый)"
 
 msgid "Raw Mode"
 msgstr "RGB от 0.0 до 1.0 (Raw Mode)"
@@ -393,14 +406,14 @@ msgstr "Настройки правого инструмента"
 msgid "Left pixel indicator"
 msgstr "Цвет для ЛКМ"
 
-msgid "Show tool icon"
-msgstr "Показать значок инструмента"
-
 msgid "LEFT_INDIC_HT"
 msgstr "Отображать цвет кисти для ЛКМ во время рисования"
 
 msgid "RIGHT_INDIC_HT"
 msgstr "Отображать цвет кисти для ПКМ во время рисования"
+
+msgid "Show tool icon"
+msgstr "Показывать значок инструмента"
 
 msgid "Right pixel indicator"
 msgstr "Цвет для ПКМ"
@@ -414,22 +427,20 @@ msgstr "Выбрать кисть"
 msgid "Brush: Pixel"
 msgstr "Кисть: Пиксель"
 
-#, fuzzy
 msgid "Brush: Circle"
-msgstr "Кисть: Пиксель"
+msgstr ""
 
-#, fuzzy
 msgid "Brush: Filled Circle"
-msgstr "Кисть: Пиксель"
+msgstr ""
 
 msgid "Custom brush"
-msgstr "Текущая кисть"
+msgstr "Своя кисть"
 
 msgid "Brush size:"
 msgstr "Размер кисти:"
 
 msgid "Brush color from"
-msgstr "Цвет кисти"
+msgstr "Цвет кисти из"
 
 msgid "COLORFROM_HT"
 msgstr "0: Собственный цвет кисти, 100: Выбранный цвет"
@@ -441,10 +452,10 @@ msgid "Area of the same color"
 msgstr "Область того же цвета"
 
 msgid "All pixels of the same color"
-msgstr "Все точки такого же цвета"
+msgstr "Все пиксели такого же цвета"
 
 msgid "Lighten"
-msgstr "Высветлить"
+msgstr "Осветлить"
 
 msgid "Darken"
 msgstr "Затемнить"
@@ -453,30 +464,28 @@ msgid "Amount:"
 msgstr "Кол-во:"
 
 msgid "LDAMOUNT_HT"
-msgstr "Интенсивность Высветления/Затемнения"
+msgstr "Интенсивность осветления/затемнения"
 
 msgid "Pick for:"
 msgstr ""
 
-#, fuzzy
 msgid "Left Color"
-msgstr "Цвет:"
+msgstr ""
 
-#, fuzzy
 msgid "Right Color"
-msgstr "Настройки правого инструмента"
+msgstr ""
 
 msgid "Mirroring"
-msgstr "Отразить зеркально"
+msgstr "Зеркало"
 
 msgid "Horizontal"
 msgstr "Горизонально"
 
 msgid "HORIZMIRROR_HT"
-msgstr "Режим рисования горизонтального зеркалирования"
+msgstr "Режим рисования с горизонтальным зеркалированием"
 
 msgid "VERTMIRROR_HT"
-msgstr "Режим рисования вертикального зеркалирования"
+msgstr "Режим рисования с вертикальным зеркалированием"
 
 msgid "Vertical"
 msgstr "Вертикально"
@@ -488,39 +497,32 @@ msgid "Current frame: 1/1"
 msgstr "Текущий кадр: 1/1"
 
 msgid "FIRSTFRAME_HT"
-msgstr ""
-"Перейти к первому кадру\n"
+msgstr "Перейти к первому кадру\n"
 "(Ctrl+Home)"
 
 msgid "PREVIOUSFRAME_HT"
-msgstr ""
-"На предыдущий кадр\n"
+msgstr "На предыдущий кадр\n"
 "(Ctrl+Left)"
 
 msgid "PLAYBACKWARDS_HT"
-msgstr ""
-"Проиграть анимацию задом наперед (с конца в начало)\n"
+msgstr "Проиграть анимацию задом наперед (с конца в начало)\n"
 "(F4)"
 
 msgid "PLAYFORWARD_HT"
-msgstr ""
-"Проиграть анимацию по умолчанию (с начала в конец)\n"
+msgstr "Проиграть анимацию по умолчанию (с начала в конец)\n"
 "(F5)"
 
 msgid "NEXTFRAME_HT"
-msgstr ""
-"На следующий кадр\n"
+msgstr "На следующий кадр\n"
 "(Ctrl+Right)"
 
 msgid "LASTFRAME_HT"
-msgstr ""
-"Перейти на последний кадр\n"
+msgstr "Перейти на последний кадр\n"
 "(Ctrl+End)"
 
 msgid "FPS_HT"
-msgstr ""
-"Число кадров в секунду для просмотра анимации?\n"
-"Большее число кадров в секунду ускорит анмацию."
+msgstr "Сколько кадров в секунду для просмотра анимации?\n"
+"Большее число кадров в секунду ускорит анимацию."
 
 msgid "No loop"
 msgstr "Не зацикливать"
@@ -529,7 +531,7 @@ msgid "Cycle loop"
 msgstr "Зациклить"
 
 msgid "Ping-pong loop"
-msgstr "Пинг-Понг"
+msgstr "Туда-сюда"
 
 msgid "Onion Skinning:"
 msgstr "Шлейф смежных кадров:"
@@ -550,7 +552,7 @@ msgid "Remove Frame"
 msgstr "Удалить кадр"
 
 msgid "Clone Frame"
-msgstr "Клонировать кадр"
+msgstr "Дублировать кадр"
 
 msgid "Move Left"
 msgstr "Сместить влево"
@@ -558,9 +560,8 @@ msgstr "Сместить влево"
 msgid "Move Right"
 msgstr "Сместить вправо"
 
-#, fuzzy
 msgid "Layer"
-msgstr "Слои"
+msgstr ""
 
 msgid "Layers"
 msgstr "Слои"
@@ -587,7 +588,7 @@ msgid "Opacity:"
 msgstr ""
 
 msgid "LAYERVISIBILITY_HT"
-msgstr "Переключить видимость слоев"
+msgstr "Переключить видимость слоя"
 
 msgid "Palette"
 msgstr ""
@@ -665,10 +666,10 @@ msgid "Redo: Change Frame Order"
 msgstr "Повторить: Смена последовательности кадров"
 
 msgid "Undo: Delete Custom Brush"
-msgstr "Отменить: Удаление текущей кисти"
+msgstr "Отменить: Удаление своей кисти"
 
 msgid "Redo: Delete Custom Brush"
-msgstr "Повторить: Удаление текущей кисти"
+msgstr "Повторить: Удаление своей кисти"
 
 msgid "Move Guide"
 msgstr "Сдвинуть направляющие"
@@ -688,9 +689,8 @@ msgstr ""
 msgid "Palette Name:"
 msgstr ""
 
-#, fuzzy
 msgid "Color Name:"
-msgstr "Цвет:"
+msgstr ""
 
 msgid "Create a new empty palette?"
 msgstr ""
@@ -731,21 +731,6 @@ msgstr ""
 msgid "Take this spot!"
 msgstr ""
 
-#~ msgid "Language:"
-#~ msgstr "Язык:"
-
-#~ msgid "SPLITSCREEN_HT"
-#~ msgstr ""
-#~ "Разделить экран\n"
-#~ "\n"
-#~ "Отобразить второй холст"
-
-#~ msgid "SPLITSCREEN_HIDE_HT"
-#~ msgstr ""
-#~ "Разделить экран\n"
-#~ "\n"
-#~ "Скрыть второй холст"
-
 msgid "Image Options"
 msgstr ""
 
@@ -757,3 +742,4 @@ msgstr ""
 
 msgid "Default Fill Color:"
 msgstr ""
+
