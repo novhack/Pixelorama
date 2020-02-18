@@ -1,8 +1,8 @@
 extends GridContainer
 
-const palette_button = preload("res://Prefabs/PaletteButton.tscn");
-const palettes_path := "Palettes"
+const palette_button = preload("res://Prefabs/PaletteButton.tscn")
 
+var palettes_path := "Palettes"
 var current_palette = "Default"
 var from_palette : Palette
 
@@ -150,8 +150,9 @@ func on_color_select(index : int) -> void:
 		Global.update_right_custom_brush()
 
 func _load_palettes() -> void:
+	palettes_path = Global.root_directory.plus_file("Palettes")
 	var dir := Directory.new()
-	dir.open(".")
+	dir.open(Global.root_directory)
 	if not dir.dir_exists(palettes_path):
 		dir.make_dir(palettes_path)
 
@@ -190,4 +191,3 @@ func get_palette_files(path : String) -> Array:
 func save_palette(palette_name : String, filename : String) -> void:
 	var palette = Global.palettes[palette_name]
 	palette.save_to_file(palettes_path.plus_file(filename))
-

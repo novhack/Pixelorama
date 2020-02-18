@@ -1,0 +1,772 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n==0 ? 0 : n%10==1 && n%100!=11 ? 1 : 2);\n"
+"X-Crowdin-Project: pixelorama\n"
+"X-Crowdin-Language: lv\n"
+"X-Crowdin-File: /master/Translations/Translations.pot\n"
+"Project-Id-Version: pixelorama\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Latvian\n"
+"Language: lv_LV\n"
+"PO-Revision-Date: 2020-02-15 13:20\n"
+
+msgid "OK"
+msgstr "Labi"
+
+msgid "Cancel"
+msgstr "Atcelt"
+
+msgid "Open"
+msgstr "Atvērt"
+
+msgid "Save"
+msgstr "Saglabāt"
+
+msgid "Please Confirm..."
+msgstr "Lūdzu, apstiprini..."
+
+msgid "Image Size"
+msgstr "Attēla izmērs"
+
+msgid "Width:"
+msgstr "Platums:"
+
+msgid "Height:"
+msgstr "Augstums:"
+
+msgid "File"
+msgstr "Fails"
+
+msgid "Edit"
+msgstr "Rediģēt"
+
+msgid "View"
+msgstr "Skats"
+
+msgid "Image"
+msgstr "Attēls"
+
+msgid "Effects"
+msgstr "Efekti"
+
+msgid "Help"
+msgstr "Palīdzība"
+
+msgid "New..."
+msgstr "Jauns..."
+
+msgid "Open..."
+msgstr "Atvērt..."
+
+msgid "Save..."
+msgstr "Saglabāt..."
+
+msgid "Save as..."
+msgstr "Saglabāt kā..."
+
+msgid "Import PNG..."
+msgstr "Importēt PNG..."
+
+msgid "Export"
+msgstr "Eksportēt"
+
+msgid "Export PNG..."
+msgstr "Eksportēt PNG..."
+
+msgid "Export PNG as..."
+msgstr "Eksportēt PNG kā..."
+
+msgid "Quit"
+msgstr "Iziet"
+
+msgid "Undo"
+msgstr "Atsaukt"
+
+msgid "Redo"
+msgstr "Pārstrādāt"
+
+msgid "Scale Image"
+msgstr "Mainīt attēla izmēru"
+
+msgid "Crop Image"
+msgstr "Apgriest attēlu"
+
+msgid "Rotate Image"
+msgstr "Rotēt attēlu"
+
+msgid "Clear Selection"
+msgstr "Notīrīt atlasi"
+
+msgid "Flip Horizontal"
+msgstr "Apmest horizontāli"
+
+msgid "Flip Vertical"
+msgstr "Apmest vertikāli"
+
+msgid "Preferences"
+msgstr "Iestatījumi"
+
+msgid "Tile Mode"
+msgstr "Flīžu režīms"
+
+msgid "Show Grid"
+msgstr "Rādīt režģi"
+
+msgid "Show Rulers"
+msgstr "Rādīt mērjoslu"
+
+msgid "Show Guides"
+msgstr "Rādīt vadlīnijas"
+
+msgid "Show Animation Timeline"
+msgstr ""
+
+msgid "Fill with color:"
+msgstr "Aizpildīt ar krāsu:"
+
+msgid "Open a File"
+msgstr "Atvērt failu"
+
+msgid "Open File(s)"
+msgstr "Atvērt failu(s)"
+
+msgid "IMPORT_FILE_LABEL"
+msgstr "Importēt kā jaunu kadru"
+
+msgid "IMPORT_SPRITESHEET"
+msgstr "Importēt kā animācijas lapu"
+
+msgid "Save Sprite as .pxo"
+msgstr "Saglabāt animāciju kā .pxo"
+
+msgid "Export Sprite as .png"
+msgstr "Eksportēt animāciju kā .png"
+
+msgid "Export Sprite"
+msgstr "Eksportēt animāciju"
+
+msgid "File Exists, Overwrite?"
+msgstr "Fails eksistē, pārrakstīt?"
+
+msgid "Can't load file '%s'.\n"
+"Error code: %s"
+msgstr "Nevar ielādēd failu '%s'.\n"
+"Kļūdas kods: %s"
+
+msgid "Resize:"
+msgstr "Mainīt izmēru:"
+
+msgid "EXPORT_CURRENT_FRAME_LABEL"
+msgstr "Eksportēt aktuālo kadru"
+
+msgid "EXPORT_FRAMES_AS_MULTIPLE_FILES_LABEL"
+msgstr "Eksportēt visus kadrus atsevišķos failos"
+
+msgid "EXPORT_FRAMES_AS_SPRITESHEET_LABEL"
+msgstr "Eksportēt visus kadrus (vienā failā)"
+
+msgid "Columns"
+msgstr "Kolonna"
+
+msgid "Rows"
+msgstr "Rinda"
+
+msgid "Path:"
+msgstr "Ceļš:"
+
+msgid "Directories & Files:"
+msgstr "Direktorija un Faili:"
+
+msgid "Create Folder"
+msgstr "Izveidot mapi"
+
+msgid "File:"
+msgstr "Fails:"
+
+msgid "Interpolation:"
+msgstr "Interpolācija:"
+
+msgid "Nearest"
+msgstr "Tuvākais"
+
+msgid "Bilinear"
+msgstr "Bilineāra"
+
+msgid "Cubic"
+msgstr "Kubisks"
+
+msgid "Trilinear"
+msgstr "Trilineāra"
+
+msgid "General"
+msgstr "Vispārējā"
+
+msgid "Language"
+msgstr "Valoda"
+
+msgid "Themes"
+msgstr "Tēmas"
+
+msgid "Guides & Grid"
+msgstr "Vadlīnijas un režģis"
+
+msgid "General Options"
+msgstr "Vispārējie iestatījumi"
+
+msgid "Smooth Zoom"
+msgstr "Gluds tuvinājums"
+
+msgid "Tablet pressure sensitivity:"
+msgstr "Planšetes spiediena jutīgums:"
+
+msgid "None"
+msgstr "Nekas"
+
+msgid "Affect Brush's Alpha"
+msgstr "Ietekmēt otas alfa kanālu"
+
+msgid "Language options"
+msgstr "Valodas iestatījumi"
+
+msgid "Theme options"
+msgstr "Tēmas iestatījumi"
+
+msgid "Grid options"
+msgstr "Režģa iestatījumi"
+
+msgid "Color:"
+msgstr "Krāsa:"
+
+msgid "Guide color:"
+msgstr "Vadlīnijas krāsa:"
+
+msgid "System Language"
+msgstr "Systēmas valoda"
+
+msgid "Dark"
+msgstr "Tumš"
+
+msgid "Gray"
+msgstr "Pelēks"
+
+msgid "Gold"
+msgstr "Zelta"
+
+msgid "Light"
+msgstr "Gaišs"
+
+msgid "Invert colors"
+msgstr "Pretējās krāsas"
+
+msgid "Desaturation"
+msgstr "Atsātināt"
+
+msgid "Outline"
+msgstr "Ārlīnija"
+
+msgid "Diagonal"
+msgstr "Diagonāle"
+
+msgid "Place inside image"
+msgstr "Ievieto attēlā"
+
+msgid "Thickness:"
+msgstr "Biezums:"
+
+msgid "View Splash Screen"
+msgstr "Rādīt uzplaiksnījuma ekrānu"
+
+msgid "Issue Tracker"
+msgstr "Problēmu izsekotājs"
+
+msgid "Changelog"
+msgstr "Izmaiņu saraksts"
+
+msgid "About Pixelorama"
+msgstr "Par Pixelorama"
+
+msgid "MADEBY_LABEL"
+msgstr "Izstrādātājs Orama Interactive"
+
+msgid "Website"
+msgstr "Mājas lapa"
+
+msgid "Donate"
+msgstr "Ziedot"
+
+msgid "Developers"
+msgstr "Izstrādātāji"
+
+msgid "Contributors"
+msgstr "Līdzdalībnieki"
+
+msgid "Donors"
+msgstr "Ziedotāji"
+
+msgid "Translators"
+msgstr "Tūlkotāji"
+
+msgid "English"
+msgstr "Angļu"
+
+msgid "Greek"
+msgstr "Grieķu"
+
+msgid "French"
+msgstr "Franču"
+
+msgid "German"
+msgstr "Vācu"
+
+msgid "Polish"
+msgstr "Poļu"
+
+msgid "Brazilian Portuguese"
+msgstr "Brazīļu portugāļu"
+
+msgid "Russian"
+msgstr "Krievu"
+
+msgid "Chinese Simplified"
+msgstr "Ķīniešu vienkāršotā"
+
+msgid "Chinese Traditional"
+msgstr "Ķīniešu tradicionālā"
+
+msgid "Italian"
+msgstr "Itāļu"
+
+msgid "Latvian"
+msgstr ""
+
+msgid "Spanish"
+msgstr "Spāņu"
+
+msgid "Development Team"
+msgstr "Izstrādes komanda"
+
+msgid "Lead Programmer"
+msgstr "Vadošais programmētājs"
+
+msgid "UI Designer"
+msgstr "UI dizaineris"
+
+msgid "GitHub Contributors"
+msgstr "GitHub līdzdalībnieks"
+
+msgid "Art by"
+msgstr "Mākslas darbu autors"
+
+msgid "untitled"
+msgstr "bez nosaukuma"
+
+msgid "imported"
+msgstr "importēts"
+
+msgid "copy"
+msgstr "kopēt"
+
+msgid "QUIT_LABEL"
+msgstr "Tiešām vēlies pārtraukt darbu ar Pixelorama?"
+
+msgid "Utility Tools"
+msgstr "Lietderības rīki"
+
+msgid "RECTSELECT_HT"
+msgstr "Taisnstūra iezīmēšana\n\n"
+"R priekš kreisās peles pogas\n"
+"Alt + R priekš peles labās pogas\n\n"
+"Nospied Shift, lai pārvietotu saturu"
+
+msgid "COLORPICKER_HT"
+msgstr "Krāsu izvēlne\n"
+"Atzīmē krāsu no attēla pikseļa\n\n"
+"O priekš kreisās peles pogas\n"
+"Alt + O priekšlabās peles pogas"
+
+msgid "Draw Tools"
+msgstr "Zīmēšanas rīki"
+
+msgid "PENCIL_HT"
+msgstr "Zīmulis\n\n"
+"P priekškreisās peles pogas\n"
+"Alt + P priekš labās peles pogas\n\n"
+"Turi Shift lai novilktu līniju"
+
+msgid "ERASER_HT"
+msgstr "Dzēšgumija\n\n"
+"E priekš kreisās peles pogas\n"
+"Alt + E priekš labās peles pogas\n\n"
+"Turi Shift lai novilktu līniju"
+
+msgid "BUCKET_HT"
+msgstr "Spainis\n\n"
+"B priekš kreisās peles pogas\n"
+"Alt + B priekš labās peles pogas"
+
+msgid "LD_HT"
+msgstr "Izgaismot/ aptumšot\n\n"
+"U priekš kreisās peles pogas\n"
+"Alt + U priekš labās peles pogas"
+
+msgid "LEFTCOLOR_HT"
+msgstr "Izvēlies krāsu priekš kreisā rīka"
+
+msgid "RIGHTCOLOR_HT"
+msgstr "Izvēlies krāsu priekš labā rīka"
+
+msgid "COLORSWITCH_HT"
+msgstr "Samainīt vietām kreiso un labo krāsu"
+
+msgid "COLORDEFAULTS_HT"
+msgstr "Atjaunot noklusējuma krāsas (melns priekš kreisās, balts priekšlabās)"
+
+msgid "Raw Mode"
+msgstr "Neapstrādātais režīms"
+
+msgid "Left tool options"
+msgstr "Kreisā rīka uzstādījumi"
+
+msgid "Right tool options"
+msgstr "Labā rīka uzstādījumi"
+
+msgid "Left pixel indicator"
+msgstr "Kreisā pikseļa indikātors"
+
+msgid "LEFT_INDIC_HT"
+msgstr "Attēlot kreisās peles pogas krāsu zīmēšanas laikā"
+
+msgid "RIGHT_INDIC_HT"
+msgstr "Attēlot labās peles pogas krāsu zīmēšanas laikā"
+
+msgid "Show tool icon"
+msgstr "Rādīt rīka ikonu"
+
+msgid "Right pixel indicator"
+msgstr "Labā pikseļa indikātors"
+
+msgid "Brush:"
+msgstr "Ota:"
+
+msgid "BRUSH_HT"
+msgstr "Izvēlēties otu"
+
+msgid "Brush: Pixel"
+msgstr "Ota: Pikselis"
+
+msgid "Brush: Circle"
+msgstr "Ota: Aplis"
+
+msgid "Brush: Filled Circle"
+msgstr "Ota: Pildīts aplis"
+
+msgid "Custom brush"
+msgstr "Pielāgota ota"
+
+msgid "Brush size:"
+msgstr "Otas izmērs:"
+
+msgid "Brush color from"
+msgstr "Otas krāsa no"
+
+msgid "COLORFROM_HT"
+msgstr "0: Krāsa no pašas otas, 100: no atzīmētās krāsas"
+
+msgid "Fill area:"
+msgstr "Aizpildīt laukumu:"
+
+msgid "Area of the same color"
+msgstr "Vienādas krāsas laukums"
+
+msgid "All pixels of the same color"
+msgstr "Visus pikseļus vienādā krāsā"
+
+msgid "Lighten"
+msgstr "Izgaismot"
+
+msgid "Darken"
+msgstr "Aptumšot"
+
+msgid "Amount:"
+msgstr "Daudzums:"
+
+msgid "LDAMOUNT_HT"
+msgstr "Apgaismojuma/ Aptumšojuma daudzmums"
+
+msgid "Pick for:"
+msgstr "Izvēlēties priekš:"
+
+msgid "Left Color"
+msgstr "Kreisā krāsa"
+
+msgid "Right Color"
+msgstr "Labā krāsa"
+
+msgid "Mirroring"
+msgstr "Spoguļskats"
+
+msgid "Horizontal"
+msgstr "Horizontāli"
+
+msgid "HORIZMIRROR_HT"
+msgstr "IIeslēgt horizontālo spoguļskata zīmēšanu"
+
+msgid "VERTMIRROR_HT"
+msgstr "Ieslēgt vertikālo spoguļskata zīmēšanu"
+
+msgid "Vertical"
+msgstr "Vertikāls"
+
+msgid "Current frame:"
+msgstr "Patreizējais kadrs:"
+
+msgid "Current frame: 1/1"
+msgstr "Patreizējais kadrs: 1/1"
+
+msgid "FIRSTFRAME_HT"
+msgstr "Pirmais kadrs\n"
+"(Ctrl+Home)"
+
+msgid "PREVIOUSFRAME_HT"
+msgstr "Iepriekšējais kadrs\n"
+"(Ctrl+Left)"
+
+msgid "PLAYBACKWARDS_HT"
+msgstr "Atskaņot animāciju atpakaļgaitā (no beigām uz sākumu)\n"
+"(F4)"
+
+msgid "PLAYFORWARD_HT"
+msgstr "Atskaņot animāciju uz priekšu (no sākuma uz beigām)\n"
+"(F5)"
+
+msgid "NEXTFRAME_HT"
+msgstr "Nākošais kadrs\n"
+"(Ctrl+Right)"
+
+msgid "LASTFRAME_HT"
+msgstr "Pēdējais kadrs\n"
+"(Ctrl+End)"
+
+msgid "FPS_HT"
+msgstr "Cik kadrus sekundē animāciju atskaņot?\n"
+"Lielāks kadru skaits atskaņos animāciju ātrāk."
+
+msgid "No loop"
+msgstr "Bez cilpošanas"
+
+msgid "Cycle loop"
+msgstr "Riņķa cilpa"
+
+msgid "Ping-pong loop"
+msgstr "Ping-pong cilpa"
+
+msgid "Onion Skinning:"
+msgstr "Sīpola mizu skats:"
+
+msgid "Past Frames"
+msgstr "Pagājušie kadri"
+
+msgid "Future Frames"
+msgstr "Nākošie kadri"
+
+msgid "Blue-Red Mode"
+msgstr "Zili-Sarkanais režīms"
+
+msgid "Add a new frame"
+msgstr "Pievienot jaunu kadru"
+
+msgid "Remove Frame"
+msgstr "Noņemt kadru"
+
+msgid "Clone Frame"
+msgstr "Klonēt kadru"
+
+msgid "Move Left"
+msgstr "Pārvietot pa kreisi"
+
+msgid "Move Right"
+msgstr "Pārvietoties pa labi"
+
+msgid "Layer"
+msgstr "Slānis"
+
+msgid "Layers"
+msgstr "Slāņi"
+
+msgid "LAYERNEW_HT"
+msgstr "Izveidot jaunu slāni"
+
+msgid "LAYERREMOVE_HT"
+msgstr "Noņemt aktuālo slāni"
+
+msgid "LAYERUP_HT"
+msgstr "Pārvietot aktuālo slāni uz augšu"
+
+msgid "LAYERDOWN_HT"
+msgstr "Pārvietot aktuālo slāni uz leju"
+
+msgid "LAYERCLONE_HT"
+msgstr "Klonēt aktuālo slāni"
+
+msgid "LAYERMERGE_HT"
+msgstr "Apvienot aktuālo slāni ar apakšējo slāni"
+
+msgid "Opacity:"
+msgstr "Necaurspīdīgums:"
+
+msgid "LAYERVISIBILITY_HT"
+msgstr "SLāņa redzamības slēdzis"
+
+msgid "Palette"
+msgstr "Palete"
+
+msgid "Palettes"
+msgstr "Paletes"
+
+msgid "NEWPALETTE_HT"
+msgstr "Pievienot jaunu paleti"
+
+msgid "EDITPALETTE_HT"
+msgstr "Rediģēt iezīmēto paleti"
+
+msgid "CHOOSEPALETTE_HT"
+msgstr "Izvēlētis paleti"
+
+msgid "Undo: Draw"
+msgstr "Atcelt: Zīmēt"
+
+msgid "Redo: Draw"
+msgstr "Atkārtot: Zīmēt"
+
+msgid "Undo: Rectangle Select"
+msgstr "Atcelt: Taisnstūra iezīmēšanu"
+
+msgid "Redo: Rectangle Select"
+msgstr "Atkārtot: Taisnstūra atzīmēšanu"
+
+msgid "Undo: Scale"
+msgstr "Atcelt: Izmera maiņu"
+
+msgid "Redo: Scale"
+msgstr "Atkārtot: Izmēra maiņu"
+
+msgid "Undo: Add Layer"
+msgstr "Atcelt: Slāņa pievienošanu"
+
+msgid "Redo: Add Layer"
+msgstr "Atkārtot: Slāņa pievienošanu"
+
+msgid "Undo: Remove Layer"
+msgstr "Atcelt: Slāņa noņemšanu"
+
+msgid "Redo: Remove Layer"
+msgstr "Atkārtot: Slāņa noņemšanu"
+
+msgid "Undo: Merge Layer"
+msgstr "Atcelt: Slāņu apvienošanu"
+
+msgid "Redo: Merge Layer"
+msgstr "Atkārtot: Slāņu apvienošanu"
+
+msgid "Undo: Change Layer Order"
+msgstr "Atcelt: Slāņu secības maiņu"
+
+msgid "Redo: Change Layer Order"
+msgstr "Atkārtot: Slāņu secības maiņu"
+
+msgid "Undo: Add Frame"
+msgstr "Atcelt: Kadra pievienošanu"
+
+msgid "Redo: Add Frame"
+msgstr "Atkārtot: Kadra pievienošanu"
+
+msgid "Undo: Remove Frame"
+msgstr "Atcelt: Kadra noņemšanu"
+
+msgid "Redo: Remove Frame"
+msgstr "Atkārtot: Kadra noņemšanu"
+
+msgid "Undo: Change Frame Order"
+msgstr "Atcelt: Kadra secības maiņu"
+
+msgid "Redo: Change Frame Order"
+msgstr "Atkārtot: Kadra secības maiņu"
+
+msgid "Undo: Delete Custom Brush"
+msgstr "Atcelt: Pielāgotās otas dzēšanu"
+
+msgid "Redo: Delete Custom Brush"
+msgstr "Atkārtot: Pielāgotās otas dzēšanu"
+
+msgid "Move Guide"
+msgstr "Pārvietot vadlīniju"
+
+msgid "File saved"
+msgstr "Fails saglabāts"
+
+msgid "File exported"
+msgstr "Fails eksportēts"
+
+msgid "New Empty Palette"
+msgstr "Jauna tukša palete"
+
+msgid "Import Palette"
+msgstr "Importēt paleti"
+
+msgid "Palette Name:"
+msgstr "Paletes nosaukums:"
+
+msgid "Color Name:"
+msgstr "Krāsas nosaukums:"
+
+msgid "Create a new empty palette?"
+msgstr "Izveidot jaunu tukšu paleti?"
+
+msgid "Error: Palette must have a valid name."
+msgstr "Kļūda: Paletei nepieciešams derīgs nosaukums."
+
+msgid "Error: Palette named '%s' already exists!"
+msgstr "Kļūda: Paletes nosaukums '%s' jau eksistē!"
+
+msgid "Invalid Palette file!"
+msgstr "Nederīgs paletes fails!"
+
+msgid "Edit Palette"
+msgstr "Rediģēt paleti"
+
+msgid "Patrons:"
+msgstr "Labvēļi:"
+
+msgid "Changes"
+msgstr "Izmaiņas"
+
+msgid "Platinum Sponsor"
+msgstr "Platīna sponsors"
+
+msgid "Gold Sponsors"
+msgstr "Zelta sponsors"
+
+msgid "Platinum Sponsor Placeholder"
+msgstr "Platīna sponsora aizvietotājs"
+
+msgid "Gold Sponsors Placeholder"
+msgstr "Zelta sponsora aizvietotājs"
+
+msgid "Don't show again"
+msgstr "Vairāk nerādīt"
+
+msgid "Take this spot!"
+msgstr "Ieņemt šo vietu!"
+
+msgid "Image Options"
+msgstr "Bildes uzstādījumi"
+
+msgid "Default Width:"
+msgstr "Noklusējuma platums:"
+
+msgid "Default Height:"
+msgstr "Noklusējuma augstums:"
+
+msgid "Default Fill Color:"
+msgstr "Noklusējuma aizpildes krāsa:"
+

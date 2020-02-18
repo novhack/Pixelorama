@@ -1,5 +1,9 @@
 extends Node
 
+enum Pressure_Sensitivity {NONE, ALPHA, SIZE, ALPHA_AND_SIZE}
+enum Brush_Types {PIXEL, CIRCLE, FILLED_CIRCLE, FILE, RANDOM_FILE, CUSTOM}
+
+var root_directory := "."
 var config_cache := ConfigFile.new()
 # warning-ignore:unused_class_variable
 var loaded_locales : Array
@@ -15,12 +19,16 @@ var has_focus := false
 var canvases := []
 # warning-ignore:unused_class_variable
 var hidden_canvases := []
+var pressure_sensitivity_mode = Pressure_Sensitivity.NONE
+var smooth_zoom := true
+var cursor_image = preload("res://Assets/Graphics/Cursor.png")
 var left_cursor_tool_texture : ImageTexture
 var right_cursor_tool_texture : ImageTexture
 var transparent_background : ImageTexture
 # warning-ignore:unused_class_variable
 var selected_pixels := []
 var image_clipboard : Image
+
 # warning-ignore:unused_class_variable
 var theme_type := "Dark"
 # warning-ignore:unused_class_variable
@@ -93,6 +101,8 @@ var draw_grid := false
 var show_rulers := true
 # warning-ignore:unused_class_variable
 var show_guides := true
+# warning-ignore:unused_class_variable
+var show_animation_timeline := true
 
 # Onion skinning options
 # warning-ignore:unused_class_variable
@@ -103,15 +113,14 @@ var onion_skinning_future_rate := 0
 var onion_skinning_blue_red := false
 
 # Brushes
-enum BRUSH_TYPES {PIXEL, CIRCLE, FILLED_CIRCLE, FILE, RANDOM_FILE, CUSTOM}
 # warning-ignore:unused_class_variable
 var left_brush_size := 1
 # warning-ignore:unused_class_variable
 var right_brush_size := 1
 # warning-ignore:unused_class_variable
-var current_left_brush_type = BRUSH_TYPES.PIXEL
+var current_left_brush_type = Brush_Types.PIXEL
 # warning-ignore:unused_class_variable
-var current_right_brush_type = BRUSH_TYPES.PIXEL
+var current_right_brush_type = Brush_Types.PIXEL
 # warning-ignore:unused_class_variable
 var brush_type_window_position := "left"
 var left_circle_points := []
@@ -240,6 +249,8 @@ var error_dialog : AcceptDialog
 
 func _ready() -> void:
 	randomize()
+	if OS.has_feature("standalone"):
+		root_directory = OS.get_executable_path().get_base_dir()
 	# Load settings from the config file
 	config_cache.load("user://cache.ini")
 
@@ -480,12 +491,12 @@ func frame_changed(value : int) -> void:
 	canvas.frame_button.get_node("FrameID").add_color_override("font_color", Color("#3c5d75"))
 
 
-func create_brush_button(brush_img : Image, brush_type := BRUSH_TYPES.CUSTOM, hint_tooltip := "") -> void:
+func create_brush_button(brush_img : Image, brush_type := Brush_Types.CUSTOM, hint_tooltip := "") -> void:
 	var brush_container
 	var brush_button = load("res://Prefabs/BrushButton.tscn").instance()
 	brush_button.brush_type = brush_type
 	brush_button.custom_brush_index = custom_brushes.size() - 1
-	if brush_type == BRUSH_TYPES.FILE || brush_type == BRUSH_TYPES.RANDOM_FILE:
+	if brush_type == Brush_Types.FILE || brush_type == Brush_Types.RANDOM_FILE:
 		brush_container = file_brush_container
 	else:
 		brush_container = project_brush_container
@@ -493,13 +504,13 @@ func create_brush_button(brush_img : Image, brush_type := BRUSH_TYPES.CUSTOM, hi
 	brush_tex.create_from_image(brush_img, 0)
 	brush_button.get_child(0).texture = brush_tex
 	brush_button.hint_tooltip = hint_tooltip
-	if brush_type == BRUSH_TYPES.RANDOM_FILE:
+	if brush_type == Brush_Types.RANDOM_FILE:
 		brush_button.random_brushes.append(brush_img)
 	brush_container.add_child(brush_button)
 
 func remove_brush_buttons() -> void:
-	current_left_brush_type = BRUSH_TYPES.PIXEL
-	current_right_brush_type = BRUSH_TYPES.PIXEL
+	current_left_brush_type = Brush_Types.PIXEL
+	current_right_brush_type = Brush_Types.PIXEL
 	for child in project_brush_container.get_children():
 		child.queue_free()
 
@@ -522,16 +533,16 @@ func redo_custom_brush(_brush_button : BaseButton = null) -> void:
 		notification_label("Redo: %s" % action_name)
 
 func update_left_custom_brush() -> void:
-	if current_left_brush_type == BRUSH_TYPES.PIXEL:
+	if current_left_brush_type == Brush_Types.PIXEL:
 		var pixel := Image.new()
 		pixel = preload("res://Assets/Graphics/pixel_image.png")
 		left_brush_type_button.get_child(0).texture.create_from_image(pixel, 0)
-	elif current_left_brush_type == BRUSH_TYPES.CIRCLE:
+	elif current_left_brush_type == Brush_Types.CIRCLE:
 		var pixel := Image.new()
 		pixel = preload("res://Assets/Graphics/circle_9x9.png")
 		left_brush_type_button.get_child(0).texture.create_from_image(pixel, 0)
 		left_circle_points = plot_circle(left_brush_size)
-	elif current_left_brush_type == BRUSH_TYPES.FILLED_CIRCLE:
+	elif current_left_brush_type == Brush_Types.FILLED_CIRCLE:
 		var pixel := Image.new()
 		pixel = preload("res://Assets/Graphics/circle_filled_9x9.png")
 		left_brush_type_button.get_child(0).texture.create_from_image(pixel, 0)
@@ -547,16 +558,16 @@ func update_left_custom_brush() -> void:
 		left_brush_type_button.get_child(0).texture = custom_left_brush_texture
 
 func update_right_custom_brush() -> void:
-	if current_right_brush_type == BRUSH_TYPES.PIXEL:
+	if current_right_brush_type == Brush_Types.PIXEL:
 		var pixel := Image.new()
 		pixel = preload("res://Assets/Graphics/pixel_image.png")
 		right_brush_type_button.get_child(0).texture.create_from_image(pixel, 0)
-	elif current_right_brush_type == BRUSH_TYPES.CIRCLE:
+	elif current_right_brush_type == Brush_Types.CIRCLE:
 		var pixel := Image.new()
 		pixel = preload("res://Assets/Graphics/circle_9x9.png")
 		right_brush_type_button.get_child(0).texture.create_from_image(pixel, 0)
 		right_circle_points = plot_circle(right_brush_size)
-	elif current_right_brush_type == BRUSH_TYPES.FILLED_CIRCLE:
+	elif current_right_brush_type == Brush_Types.FILLED_CIRCLE:
 		var pixel := Image.new()
 		pixel = preload("res://Assets/Graphics/circle_filled_9x9.png")
 		right_brush_type_button.get_child(0).texture.create_from_image(pixel, 0)
@@ -611,6 +622,201 @@ func plot_circle(r : int) -> Array:
 			x += 1
 			err += x * 2 + 1
 	return circle_points
+
+func scale3X(sprite : Image, tol : float = 50) -> Image:
+	var scaled = Image.new()
+	scaled.create(sprite.get_width()*3, sprite.get_height()*3, false, Image.FORMAT_RGBA8)
+	scaled.lock()
+	sprite.lock()
+	var a : Color
+	var b : Color
+	var c : Color
+	var d : Color
+	var e : Color
+	var f : Color
+	var g : Color
+	var h : Color
+	var i : Color
+
+	for x in range(1,sprite.get_width()-1):
+		for y in range(1,sprite.get_height()-1):
+			var xs : float = 3*x
+			var ys : float = 3*y
+
+			a = sprite.get_pixel(x-1,y-1)
+			b = sprite.get_pixel(x,y-1)
+			c = sprite.get_pixel(x+1,y-1)
+			d = sprite.get_pixel(x-1,y)
+			e = sprite.get_pixel(x,y)
+			f = sprite.get_pixel(x+1,y)
+			g = sprite.get_pixel(x-1,y+1)
+			h = sprite.get_pixel(x,y+1)
+			i = sprite.get_pixel(x+1,y+1)
+
+			var db : bool = similarColors(d, b, tol)
+			var dh : bool = similarColors(d, h, tol)
+			var bf : bool = similarColors(f, b, tol)
+			var ec : bool = similarColors(e, c, tol)
+			var ea : bool = similarColors(e, a, tol)
+			var fh : bool = similarColors(f, h, tol)
+			var eg : bool = similarColors(e, g, tol)
+			var ei : bool = similarColors(e, i, tol)
+
+			scaled.set_pixel(xs-1, ys-1, d if (db and !dh and !bf) else e )
+			scaled.set_pixel(xs, ys-1, b if (db and !dh and !bf and !ec) or
+			(bf and !db and !fh and !ea) else e)
+			scaled.set_pixel(xs+1, ys-1, f if (bf and !db and !fh) else e)
+			scaled.set_pixel(xs-1, ys, d if (dh and !fh and !db and !ea) or
+			 (db and !dh and !bf and !eg) else e)
+			scaled.set_pixel(xs, ys, e);
+			scaled.set_pixel(xs+1, ys, f if (bf and !db and !fh and !ei) or
+			(fh and !bf and !dh and !ec) else e)
+			scaled.set_pixel(xs-1, ys+1, d if (dh and !fh and !db) else e)
+			scaled.set_pixel(xs, ys+1, h if (fh and !bf and !dh and !eg) or
+			(dh and !fh and !db and !ei) else e)
+			scaled.set_pixel(xs+1, ys+1, f if (fh and !bf and !dh) else e)
+
+	scaled.unlock()
+	sprite.unlock()
+	return scaled
+
+func rotxel(sprite : Image, angle : float) -> void:
+
+	# If angle is simple, then nn rotation is the best
+
+	if angle == 0 || angle == PI/2 || angle == PI || angle == 2*PI:
+		nn_rotate(sprite, angle)
+		return
+
+	var aux : Image = Image.new()
+	aux.copy_from(sprite)
+	var center : Vector2 = Vector2(sprite.get_width()/2, sprite.get_height()/2)
+	var ox : int
+	var oy : int
+	var p : Color
+	aux.lock()
+	sprite.lock()
+	for x in range(sprite.get_width()):
+		for y in range(sprite.get_height()):
+			var dx = 3*(x - center.x)
+			var dy = 3*(y - center.y)
+			var found_pixel : bool = false
+			for k in range(9):
+				var i = -1 + k % 3
+				var j = -1 + int(k / 3)
+				var dir = atan2(dy + j, dx + i)
+				var mag = sqrt(pow(dx + i, 2) + pow(dy + j, 2))
+				dir -= angle
+				ox = round(center.x*3 + 1 + mag*cos(dir))
+				oy = round(center.y*3 + 1 + mag*sin(dir))
+
+				if (sprite.get_width() % 2 != 0):
+					ox += 1
+					oy += 1
+
+				if (ox >= 0 && ox < sprite.get_width()*3
+					&& oy >= 0 && oy < sprite.get_height()*3):
+						found_pixel = true
+						break
+
+			if !found_pixel:
+				sprite.set_pixel(x, y, Color(0,0,0,0))
+				continue
+
+			var fil : int = oy % 3
+			var col : int = ox % 3
+			var index : int = col + 3*fil
+
+			ox = round((ox - 1)/3.0);
+			oy = round((oy - 1)/3.0);
+			var a : Color
+			var b : Color
+			var c : Color
+			var d : Color
+			var e : Color
+			var f : Color
+			var g : Color
+			var h : Color
+			var i : Color
+			if (ox == 0 || ox == sprite.get_width() - 1 ||
+				oy == 0 || oy == sprite.get_height() - 1):
+					p = aux.get_pixel(ox, oy)
+			else:
+				a = aux.get_pixel(ox-1,oy-1);
+				b = aux.get_pixel(ox,oy-1);
+				c = aux.get_pixel(ox+1,oy-1);
+				d = aux.get_pixel(ox-1,oy);
+				e = aux.get_pixel(ox,oy);
+				f = aux.get_pixel(ox+1,oy);
+				g = aux.get_pixel(ox-1,oy+1);
+				h = aux.get_pixel(ox,oy+1);
+				i = aux.get_pixel(ox+1,oy+1);
+
+				match(index):
+					0:
+						p = d if (similarColors(d,b) && !similarColors(d,h)
+						 && !similarColors(b,f)) else e;
+					1:
+						p = b if ((similarColors(d,b) && !similarColors(d,h) &&
+						 !similarColors(b,f) && !similarColors(e,c)) ||
+						 (similarColors(b,f) && !similarColors(d,b) &&
+						 !similarColors(f,h) && !similarColors(e,a))) else e;
+					2:
+						p = f if (similarColors(b,f) && !similarColors(d,b) &&
+						 !similarColors(f,h)) else e;
+					3:
+						p = d if ((similarColors(d,h) && !similarColors(f,h) &&
+						 !similarColors(d,b) && !similarColors(e,a)) ||
+						 (similarColors(d,b) && !similarColors(d,h) &&
+						!similarColors(b,f) && !similarColors(e,g))) else e;
+					4:
+						p = e
+					5:
+						p =  f if((similarColors(b,f) && !similarColors(d,b) &&
+						 !similarColors(f,h) && !similarColors(e,i))
+						 || (similarColors(f,h) && !similarColors(b,f) &&
+						 !similarColors(d,h) && !similarColors(e,c))) else e;
+					6:
+						p = d if (similarColors(d,h) && !similarColors(f,h) &&
+						 !similarColors(d,b)) else e;
+					7:
+						p = h if ((similarColors(f,h) && !similarColors(f,b) &&
+						 !similarColors(d,h) && !similarColors(e,g))
+						 || (similarColors(d,h) && !similarColors(f,h) &&
+						 !similarColors(d,b) && !similarColors(e,i))) else e;
+					8:
+						p = f if (similarColors(f,h) && !similarColors(f,b) &&
+						 !similarColors(d,h)) else e;
+			sprite.set_pixel(x, y, p)
+	sprite.unlock()
+	aux.unlock()
+
+func nn_rotate(sprite : Image, angle : float) -> void:
+	var aux : Image = Image.new()
+	aux.copy_from(sprite)
+	sprite.lock()
+	aux.lock()
+	var ox: int
+	var oy: int
+	var center : Vector2 = Vector2(sprite.get_width()/2, sprite.get_height()/2)
+	for x in range(sprite.get_width()):
+		for y in range(sprite.get_height()):
+			ox = (x - center.x)*cos(angle) + (y - center.y)*sin(angle) + center.x
+			oy = -(x - center.x)*sin(angle) + (y - center.y)*cos(angle) + center.y
+			if ox >= 0 && ox < sprite.get_width() && oy >= 0 && oy < sprite.get_height():
+				sprite.set_pixel(x, y, aux.get_pixel(ox, oy))
+			else:
+				sprite.set_pixel(x, y, Color(0,0,0,0))
+	sprite.unlock()
+	aux.unlock()
+
+func similarColors(c1 : Color, c2 : Color, tol : float = 100) -> bool:
+	var dist = colorDistance(c1, c2)
+	return dist <= tol
+
+func colorDistance(c1 : Color, c2 : Color) -> float:
+		return sqrt(pow((c1.r - c2.r)*255, 2) + pow((c1.g - c2.g)*255, 2)
+		+ pow((c1.b - c2.b)*255, 2) + pow((c1.a - c2.a)*255, 2))
 
 func _exit_tree() -> void:
 	config_cache.set_value("window", "screen", OS.current_screen)

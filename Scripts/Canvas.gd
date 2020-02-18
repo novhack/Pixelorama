@@ -1,5 +1,5 @@
-extends Node2D
 class_name Canvas
+extends Node2D
 
 var layers := []
 var current_layer_index := 0
@@ -9,7 +9,6 @@ var fill_color := Color(0, 0, 0, 0)
 var frame := 0 setget frame_changed
 var frame_button : VBoxContainer
 var frame_texture_rect : TextureRect
-
 var current_pixel := Vector2.ZERO # pretty much same as mouse_pos, but can be accessed externally
 var previous_mouse_pos := Vector2.ZERO
 var previous_mouse_pos_for_lines := Vector2.ZERO
@@ -22,11 +21,13 @@ var north_limit := location.y
 var south_limit := location.y + size.y
 var mouse_inside_canvas := false # used for undo
 var sprite_changed_this_frame := false # for optimization purposes
-var lighten_darken_pixels := [] # Cleared after mouse release
+var mouse_press_pixels := [] # Cleared after mouse release
+var mouse_press_pressure_values := [] # Cleared after mouse release
 var is_making_line := false
 var made_line := false
 var is_making_selection := "None"
 var line_2d : Line2D
+var pen_pressure := 1.0 # For tablet pressure sensitivity
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -76,28 +77,98 @@ func _ready() -> void:
 	line_2d.add_point(previous_mouse_pos_for_lines)
 	add_child(line_2d)
 
-func camera_zoom() -> void:
-	# Set camera zoom based on the sprite size
-	var bigger = max(size.x, size.y)
-	var zoom_max := Vector2(bigger, bigger) * 0.01
-	if zoom_max > Vector2.ONE:
-		Global.camera.zoom_max = zoom_max
-		Global.camera2.zoom_max = zoom_max
-		Global.camera_preview.zoom_max = zoom_max
-	else:
-		Global.camera.zoom_max = Vector2.ONE
-		Global.camera2.zoom_max = Vector2.ONE
-		Global.camera_preview.zoom_max = Vector2.ONE
+func _draw() -> void:
+	draw_texture_rect(Global.transparent_background, Rect2(location, size), true) #Draw transparent background
+	#Onion Skinning
+	#Past
+	if Global.onion_skinning_past_rate > 0:
+		var color : Color
+		if Global.onion_skinning_blue_red:
+			color = Color.blue
+		else:
+			color = Color.white
+		for i in range(1, Global.onion_skinning_past_rate + 1):
+			if Global.current_frame >= i:
+				for texture in Global.canvases[Global.current_frame - i].layers:
+					color.a = 0.6/i
+					draw_texture(texture[1], location, color)
 
-	Global.camera.zoom = Vector2(bigger, bigger) * 0.002
-	Global.camera2.zoom = Vector2(bigger, bigger) * 0.002
-	Global.camera_preview.zoom = Vector2(bigger, bigger) * 0.007
-	Global.zoom_level_label.text = str(round(100 / Global.camera.zoom.x)) + " %"
+	#Future
+	if Global.onion_skinning_future_rate > 0:
+		var color : Color
+		if Global.onion_skinning_blue_red:
+			color = Color.red
+		else:
+			color = Color.white
+		for i in range(1, Global.onion_skinning_future_rate + 1):
+			if Global.current_frame < Global.canvases.size() - i:
+				for texture in Global.canvases[Global.current_frame + i].layers:
+					color.a = 0.6/i
+					draw_texture(texture[1], location, color)
 
-	# Set camera offset to the center of canvas
-	Global.camera.offset = size / 2
-	Global.camera2.offset = size / 2
-	Global.camera_preview.offset = size / 2
+	#Draw current frame layers
+	for texture in layers:
+		var modulate_color := Color(1, 1, 1, texture[4])
+		if texture[3]: #if it's visible
+			draw_texture(texture[1], location, modulate_color)
+
+			if Global.tile_mode:
+				draw_texture(texture[1], Vector2(location.x, location.y + size.y), modulate_color) #Down
+				draw_texture(texture[1], Vector2(location.x - size.x, location.y + size.y), modulate_color) #Down Left
+				draw_texture(texture[1], Vector2(location.x - size.x, location.y), modulate_color) #Left
+				draw_texture(texture[1], location - size, modulate_color) #Up left
+				draw_texture(texture[1], Vector2(location.x, location.y - size.y), modulate_color) #Up
+				draw_texture(texture[1], Vector2(location.x + size.x, location.y - size.y), modulate_color) #Up right
+				draw_texture(texture[1], Vector2(location.x + size.x, location.y), modulate_color) #Right
+				draw_texture(texture[1], location + size, modulate_color) #Down right
+
+	#Idea taken from flurick (on GitHub)
+	if Global.draw_grid:
+		for x in range(0, size.x, Global.grid_width):
+			draw_line(Vector2(x, location.y), Vector2(x, size.y), Global.grid_color, true)
+		for y in range(0, size.y, Global.grid_height):
+			draw_line(Vector2(location.x, y), Vector2(size.x, y), Global.grid_color, true)
+
+	#Draw rectangle to indicate the pixel currently being hovered on
+	var mouse_pos := current_pixel
+	if point_in_rectangle(mouse_pos, location, location + size):
+		mouse_pos = mouse_pos.floor()
+		if Global.left_square_indicator_visible && Global.can_draw:
+			if Global.current_left_brush_type == Global.Brush_Types.PIXEL || Global.current_left_tool == "LightenDarken":
+				if Global.current_left_tool == "Pencil" || Global.current_left_tool == "Eraser" || Global.current_left_tool == "LightenDarken":
+					var start_pos_x = mouse_pos.x - (Global.left_brush_size >> 1)
+					var start_pos_y = mouse_pos.y - (Global.left_brush_size >> 1)
+					draw_rect(Rect2(start_pos_x, start_pos_y, Global.left_brush_size, Global.left_brush_size), Color.blue, false)
+			elif Global.current_left_brush_type == Global.Brush_Types.CIRCLE || Global.current_left_brush_type == Global.Brush_Types.FILLED_CIRCLE:
+				if Global.current_left_tool == "Pencil" || Global.current_left_tool == "Eraser":
+					draw_set_transform(mouse_pos, rotation, scale)
+					for rect in Global.left_circle_points:
+						draw_rect(Rect2(rect, Vector2.ONE), Color.blue, false)
+					draw_set_transform(position, rotation, scale)
+			else:
+				if Global.current_left_tool == "Pencil" || Global.current_left_tool == "Eraser":
+					var custom_brush_size = Global.custom_left_brush_image.get_size()  - Vector2.ONE
+					var dst := rectangle_center(mouse_pos, custom_brush_size)
+					draw_texture(Global.custom_left_brush_texture, dst)
+
+		if Global.right_square_indicator_visible && Global.can_draw:
+			if Global.current_right_brush_type == Global.Brush_Types.PIXEL || Global.current_right_tool == "LightenDarken":
+				if Global.current_right_tool == "Pencil" || Global.current_right_tool == "Eraser" || Global.current_right_tool == "LightenDarken":
+					var start_pos_x = mouse_pos.x - (Global.right_brush_size >> 1)
+					var start_pos_y = mouse_pos.y - (Global.right_brush_size >> 1)
+					draw_rect(Rect2(start_pos_x, start_pos_y, Global.right_brush_size, Global.right_brush_size), Color.red, false)
+			elif Global.current_right_brush_type == Global.Brush_Types.CIRCLE || Global.current_right_brush_type == Global.Brush_Types.FILLED_CIRCLE:
+				if Global.current_right_tool == "Pencil" || Global.current_right_tool == "Eraser":
+					draw_set_transform(mouse_pos, rotation, scale)
+					for rect in Global.right_circle_points:
+						draw_rect(Rect2(rect, Vector2.ONE), Color.red, false)
+					draw_set_transform(position, rotation, scale)
+			else:
+				if Global.current_right_tool == "Pencil" || Global.current_right_tool == "Eraser":
+					var custom_brush_size = Global.custom_right_brush_image.get_size()  - Vector2.ONE
+					var dst := rectangle_center(mouse_pos, custom_brush_size)
+					draw_texture(Global.custom_right_brush_texture, dst)
+
 
 func _input(event : InputEvent) -> void:
 	# Don't process anything below if the input isn't a mouse event, or Shift/Ctrl.
@@ -109,6 +180,12 @@ func _input(event : InputEvent) -> void:
 		else:
 			return
 
+	if (Input.is_action_just_released("left_mouse") && !Input.is_action_pressed("right_mouse")) || (Input.is_action_just_released("right_mouse") && !Input.is_action_pressed("left_mouse")):
+		made_line = false
+		mouse_press_pixels.clear()
+		mouse_press_pressure_values.clear()
+		can_undo = true
+
 	current_pixel = get_local_mouse_position() + location
 	if Global.current_frame != frame:
 		previous_mouse_pos = current_pixel
@@ -118,6 +195,13 @@ func _input(event : InputEvent) -> void:
 
 	if Global.has_focus:
 		update()
+
+	# Godot 3.2 and above only code
+	if Engine.get_version_info().major == 3 && Engine.get_version_info().minor >= 2:
+		if event is InputEventMouseMotion:
+			pen_pressure = event.pressure
+			if event.pressure == 0.0: # Drawing with mouse
+				pen_pressure = 1 # This causes problems with tablets though
 
 	sprite_changed_this_frame = false
 	var mouse_pos := current_pixel
@@ -164,7 +248,7 @@ func _input(event : InputEvent) -> void:
 		Global.cursor_position_label.text = "[%s×%s]    %s, %s" % [size.x, size.y, mouse_pos_floored.x, mouse_pos_floored.y]
 		if !cursor_inside_canvas:
 			cursor_inside_canvas = true
-			Input.set_custom_mouse_cursor(load("res://Assets/Graphics/Cursor.png"), 0, Vector2(15, 15))
+			Input.set_custom_mouse_cursor(Global.cursor_image, 0, Vector2(15, 15))
 			if Global.show_left_tool_icon:
 				Global.left_cursor.visible = true
 			if Global.show_right_tool_icon:
@@ -202,17 +286,15 @@ func _input(event : InputEvent) -> void:
 				else:
 					handle_undo("Draw")
 	elif (Input.is_action_just_released("left_mouse") && !Input.is_action_pressed("right_mouse")) || (Input.is_action_just_released("right_mouse") && !Input.is_action_pressed("left_mouse")):
-		made_line = false
-		lighten_darken_pixels.clear()
 		if can_handle || Global.undos == Global.undo_redo.get_version():
 			if previous_action != "None" && previous_action != "RectSelect" && current_action != "ColorPicker":
 				handle_redo("Draw")
 
 	match current_action: # Handle current tool
 		"Pencil":
-			pencil_and_eraser(mouse_pos, current_color, current_mouse_button)
+			pencil_and_eraser(mouse_pos, current_color, current_mouse_button, current_action)
 		"Eraser":
-			pencil_and_eraser(mouse_pos, Color(0, 0, 0, 0), current_mouse_button)
+			pencil_and_eraser(mouse_pos, Color(0, 0, 0, 0), current_mouse_button, current_action)
 		"Bucket":
 			if can_handle:
 				if fill_area == 0: # Paint the specific area of the same color
@@ -342,6 +424,29 @@ func _input(event : InputEvent) -> void:
 	if sprite_changed_this_frame:
 		update_texture(current_layer_index, (Input.is_action_just_released("left_mouse") || Input.is_action_just_released("right_mouse")))
 
+func camera_zoom() -> void:
+	# Set camera zoom based on the sprite size
+	var bigger = max(size.x, size.y)
+	var zoom_max := Vector2(bigger, bigger) * 0.01
+	if zoom_max > Vector2.ONE:
+		Global.camera.zoom_max = zoom_max
+		Global.camera2.zoom_max = zoom_max
+		Global.camera_preview.zoom_max = zoom_max
+	else:
+		Global.camera.zoom_max = Vector2.ONE
+		Global.camera2.zoom_max = Vector2.ONE
+		Global.camera_preview.zoom_max = Vector2.ONE
+
+	Global.camera.zoom = Vector2(bigger, bigger) * 0.002
+	Global.camera2.zoom = Vector2(bigger, bigger) * 0.002
+	Global.camera_preview.zoom = Vector2(bigger, bigger) * 0.007
+	Global.zoom_level_label.text = str(round(100 / Global.camera.zoom.x)) + " %"
+
+	# Set camera offset to the center of canvas
+	Global.camera.offset = size / 2
+	Global.camera2.offset = size / 2
+	Global.camera_preview.offset = size / 2
+
 func handle_undo(action : String) -> void:
 	if !can_undo:
 		return
@@ -370,6 +475,8 @@ func handle_undo(action : String) -> void:
 	can_undo = false
 
 func handle_redo(action : String) -> void:
+	can_undo = true
+
 	if Global.undos < Global.undo_redo.get_version():
 		return
 	var canvases := []
@@ -386,8 +493,6 @@ func handle_redo(action : String) -> void:
 		Global.undo_redo.add_do_property(Global, "selected_pixels", Global.selected_pixels)
 	Global.undo_redo.add_do_method(Global, "redo", canvases, layer_index)
 	Global.undo_redo.commit_action()
-
-	can_undo = true
 
 func update_texture(layer_index : int, update_frame_tex := true) -> void:
 	layers[layer_index][1].create_from_image(layers[layer_index][0], 0)
@@ -419,98 +524,6 @@ func get_layer_container(layer_index : int) -> LayerContainer:
 			return container
 	return null
 
-func _draw() -> void:
-	draw_texture_rect(Global.transparent_background, Rect2(location, size), true) #Draw transparent background
-	#Onion Skinning
-	#Past
-	if Global.onion_skinning_past_rate > 0:
-		var color : Color
-		if Global.onion_skinning_blue_red:
-			color = Color.blue
-		else:
-			color = Color.white
-		for i in range(1, Global.onion_skinning_past_rate + 1):
-			if Global.current_frame >= i:
-				for texture in Global.canvases[Global.current_frame - i].layers:
-					color.a = 0.6/i
-					draw_texture(texture[1], location, color)
-
-	#Future
-	if Global.onion_skinning_future_rate > 0:
-		var color : Color
-		if Global.onion_skinning_blue_red:
-			color = Color.red
-		else:
-			color = Color.white
-		for i in range(1, Global.onion_skinning_future_rate + 1):
-			if Global.current_frame < Global.canvases.size() - i:
-				for texture in Global.canvases[Global.current_frame + i].layers:
-					color.a = 0.6/i
-					draw_texture(texture[1], location, color)
-
-	#Draw current frame layers
-	for texture in layers:
-		var modulate_color := Color(1, 1, 1, texture[4])
-		if texture[3]: #if it's visible
-			draw_texture(texture[1], location, modulate_color)
-
-			if Global.tile_mode:
-				draw_texture(texture[1], Vector2(location.x, location.y + size.y), modulate_color) #Down
-				draw_texture(texture[1], Vector2(location.x - size.x, location.y + size.y), modulate_color) #Down Left
-				draw_texture(texture[1], Vector2(location.x - size.x, location.y), modulate_color) #Left
-				draw_texture(texture[1], location - size, modulate_color) #Up left
-				draw_texture(texture[1], Vector2(location.x, location.y - size.y), modulate_color) #Up
-				draw_texture(texture[1], Vector2(location.x + size.x, location.y - size.y), modulate_color) #Up right
-				draw_texture(texture[1], Vector2(location.x + size.x, location.y), modulate_color) #Right
-				draw_texture(texture[1], location + size, modulate_color) #Down right
-
-	#Idea taken from flurick (on GitHub)
-	if Global.draw_grid:
-		for x in range(0, size.x, Global.grid_width):
-			draw_line(Vector2(x, location.y), Vector2(x, size.y), Global.grid_color, true)
-		for y in range(0, size.y, Global.grid_height):
-			draw_line(Vector2(location.x, y), Vector2(size.x, y), Global.grid_color, true)
-
-	#Draw rectangle to indicate the pixel currently being hovered on
-	var mouse_pos := current_pixel
-	if point_in_rectangle(mouse_pos, location, location + size):
-		mouse_pos = mouse_pos.floor()
-		if Global.left_square_indicator_visible && Global.can_draw:
-			if Global.current_left_brush_type == Global.BRUSH_TYPES.PIXEL || Global.current_left_tool == "LightenDarken":
-				if Global.current_left_tool == "Pencil" || Global.current_left_tool == "Eraser" || Global.current_left_tool == "LightenDarken":
-					var start_pos_x = mouse_pos.x - (Global.left_brush_size >> 1)
-					var start_pos_y = mouse_pos.y - (Global.left_brush_size >> 1)
-					draw_rect(Rect2(start_pos_x, start_pos_y, Global.left_brush_size, Global.left_brush_size), Color.blue, false)
-			elif Global.current_left_brush_type == Global.BRUSH_TYPES.CIRCLE || Global.current_left_brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE:
-				if Global.current_left_tool == "Pencil" || Global.current_left_tool == "Eraser":
-					draw_set_transform(mouse_pos, rotation, scale)
-					for rect in Global.left_circle_points:
-						draw_rect(Rect2(rect, Vector2.ONE), Color.blue, false)
-					draw_set_transform(position, rotation, scale)
-			else:
-				if Global.current_left_tool == "Pencil" || Global.current_left_tool == "Eraser":
-					var custom_brush_size = Global.custom_left_brush_image.get_size()  - Vector2.ONE
-					var dst := rectangle_center(mouse_pos, custom_brush_size)
-					draw_texture(Global.custom_left_brush_texture, dst)
-
-		if Global.right_square_indicator_visible && Global.can_draw:
-			if Global.current_right_brush_type == Global.BRUSH_TYPES.PIXEL || Global.current_right_tool == "LightenDarken":
-				if Global.current_right_tool == "Pencil" || Global.current_right_tool == "Eraser" || Global.current_right_tool == "LightenDarken":
-					var start_pos_x = mouse_pos.x - (Global.right_brush_size >> 1)
-					var start_pos_y = mouse_pos.y - (Global.right_brush_size >> 1)
-					draw_rect(Rect2(start_pos_x, start_pos_y, Global.right_brush_size, Global.right_brush_size), Color.red, false)
-			elif Global.current_right_brush_type == Global.BRUSH_TYPES.CIRCLE || Global.current_right_brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE:
-				if Global.current_right_tool == "Pencil" || Global.current_right_tool == "Eraser":
-					draw_set_transform(mouse_pos, rotation, scale)
-					for rect in Global.right_circle_points:
-						draw_rect(Rect2(rect, Vector2.ONE), Color.red, false)
-					draw_set_transform(position, rotation, scale)
-			else:
-				if Global.current_right_tool == "Pencil" || Global.current_right_tool == "Eraser":
-					var custom_brush_size = Global.custom_right_brush_image.get_size()  - Vector2.ONE
-					var dst := rectangle_center(mouse_pos, custom_brush_size)
-					draw_texture(Global.custom_right_brush_texture, dst)
-
 func generate_layer_panels() -> void:
 	for child in Global.vbox_layer_container.get_children():
 		if child is LayerContainer:
@@ -539,33 +552,38 @@ func pencil_and_eraser(mouse_pos : Vector2, color : Color, current_mouse_button 
 		return
 	if is_making_line:
 		fill_gaps(line_2d.points[1], previous_mouse_pos_for_lines, color, current_mouse_button, current_action)
-		draw_pixel(line_2d.points[1], color, current_mouse_button, current_action)
+		draw_brush(line_2d.points[1], color, current_mouse_button, current_action)
 		made_line = true
 	else:
 		if point_in_rectangle(mouse_pos, location, location + size):
 			mouse_inside_canvas = true
 			# Draw
-			draw_pixel(mouse_pos, color, current_mouse_button, current_action)
+			draw_brush(mouse_pos, color, current_mouse_button, current_action)
 			fill_gaps(mouse_pos, previous_mouse_pos, color, current_mouse_button, current_action) #Fill the gaps
 		# If mouse is not inside bounds but it used to be, fill the gaps
 		elif point_in_rectangle(previous_mouse_pos, location, location + size):
 			fill_gaps(mouse_pos, previous_mouse_pos, color, current_mouse_button, current_action)
 
-func draw_pixel(pos : Vector2, color : Color, current_mouse_button : String, current_action := "None") -> void:
+func draw_brush(pos : Vector2, color : Color, current_mouse_button : String, current_action := "None") -> void:
 	if Global.can_draw && Global.has_focus:
 		var brush_size := 1
-		var brush_type = Global.BRUSH_TYPES.PIXEL
+		var brush_type = Global.Brush_Types.PIXEL
 		var brush_index := -1
 		var custom_brush_image : Image
 		var horizontal_mirror := false
 		var vertical_mirror := false
 		var ld := 0
 		var ld_amount := 0.1
+		if Global.pressure_sensitivity_mode == Global.Pressure_Sensitivity.ALPHA:
+			if current_action == "Pencil":
+				color.a *= pen_pressure
+			elif current_action == "Eraser": # This is not working
+				color.a *= (1.0 - pen_pressure)
 		if current_mouse_button == "left_mouse":
 			brush_size = Global.left_brush_size
 			brush_type = Global.current_left_brush_type
 			brush_index = Global.custom_left_brush_index
-			if brush_type != Global.BRUSH_TYPES.RANDOM_FILE:
+			if brush_type != Global.Brush_Types.RANDOM_FILE:
 				custom_brush_image = Global.custom_left_brush_image
 			else: # Handle random brush
 				var brush_button = Global.file_brush_container.get_child(brush_index + 3)
@@ -585,7 +603,7 @@ func draw_pixel(pos : Vector2, color : Color, current_mouse_button : String, cur
 			brush_size = Global.right_brush_size
 			brush_type = Global.current_right_brush_type
 			brush_index = Global.custom_right_brush_index
-			if brush_type != Global.BRUSH_TYPES.RANDOM_FILE:
+			if brush_type != Global.Brush_Types.RANDOM_FILE:
 				custom_brush_image = Global.custom_right_brush_image
 			else: # Handle random brush
 				var brush_button = Global.file_brush_container.get_child(brush_index + 3)
@@ -607,7 +625,7 @@ func draw_pixel(pos : Vector2, color : Color, current_mouse_button : String, cur
 		var end_pos_x
 		var end_pos_y
 
-		if brush_type == Global.BRUSH_TYPES.PIXEL || current_action == "LightenDarken":
+		if brush_type == Global.Brush_Types.PIXEL || current_action == "LightenDarken":
 			start_pos_x = pos.x - (brush_size >> 1)
 			start_pos_y = pos.y - (brush_size >> 1)
 			end_pos_x = start_pos_x + brush_size
@@ -618,17 +636,26 @@ func draw_pixel(pos : Vector2, color : Color, current_mouse_button : String, cur
 						var pos_floored := Vector2(cur_pos_x, cur_pos_y).floor()
 						# Don't draw the same pixel over and over and don't re-lighten/darken it
 						var current_pixel_color : Color = layers[current_layer_index][0].get_pixel(cur_pos_x, cur_pos_y)
-						if current_pixel_color != color && !(pos_floored in lighten_darken_pixels):
-							if current_action == "LightenDarken":
-								color = current_pixel_color
-								if color.a > 0:
-									if ld == 0: # Lighten
-										color = current_pixel_color.lightened(ld_amount)
-									else: # Darken
-										color = current_pixel_color.darkened(ld_amount)
-								lighten_darken_pixels.append(pos_floored)
+						var _c := color
+						if current_action == "Pencil" && color.a < 1:
+							_c = blend_colors(color, current_pixel_color)
 
-							layers[current_layer_index][0].set_pixel(cur_pos_x, cur_pos_y, color)
+						var saved_pixel_index := mouse_press_pixels.find(pos_floored)
+						if current_pixel_color != _c && (saved_pixel_index == -1 || pen_pressure > mouse_press_pressure_values[saved_pixel_index]):
+							if current_action == "LightenDarken":
+								_c = current_pixel_color
+								if _c.a > 0:
+									if ld == 0: # Lighten
+										_c = current_pixel_color.lightened(ld_amount)
+									else: # Darken
+										_c = current_pixel_color.darkened(ld_amount)
+
+							if saved_pixel_index == -1:
+								mouse_press_pixels.append(pos_floored)
+								mouse_press_pressure_values.append(pen_pressure)
+							else:
+								mouse_press_pressure_values[saved_pixel_index] = pen_pressure
+							layers[current_layer_index][0].set_pixel(cur_pos_x, cur_pos_y, _c)
 							sprite_changed_this_frame = true
 
 							# Handle mirroring
@@ -636,53 +663,56 @@ func draw_pixel(pos : Vector2, color : Color, current_mouse_button : String, cur
 							var mirror_y := south_limit + north_limit - cur_pos_y - 1
 							if horizontal_mirror:
 								current_pixel_color = layers[current_layer_index][0].get_pixel(mirror_x, cur_pos_y)
-								if current_pixel_color != color: # don't draw the same pixel over and over
+								if current_pixel_color != _c: # don't draw the same pixel over and over
 									if current_action == "LightenDarken":
 										if ld == 0: # Lighten
-											color = current_pixel_color.lightened(ld_amount)
+											_c = current_pixel_color.lightened(ld_amount)
 										else:
-											color = current_pixel_color.darkened(ld_amount)
-										lighten_darken_pixels.append(pos_floored)
+											_c = current_pixel_color.darkened(ld_amount)
 
-									layers[current_layer_index][0].set_pixel(mirror_x, cur_pos_y, color)
+									mouse_press_pixels.append(pos_floored)
+									mouse_press_pressure_values.append(pen_pressure)
+									layers[current_layer_index][0].set_pixel(mirror_x, cur_pos_y, _c)
 									sprite_changed_this_frame = true
 							if vertical_mirror:
 								current_pixel_color = layers[current_layer_index][0].get_pixel(cur_pos_x, mirror_y)
-								if current_pixel_color != color: # don't draw the same pixel over and over
+								if current_pixel_color != _c: # don't draw the same pixel over and over
 									if current_action == "LightenDarken":
 										if ld == 0: # Lighten
-											color = current_pixel_color.lightened(ld_amount)
+											_c = current_pixel_color.lightened(ld_amount)
 										else:
-											color = current_pixel_color.darkened(ld_amount)
-										lighten_darken_pixels.append(pos_floored)
+											_c = current_pixel_color.darkened(ld_amount)
 
-									layers[current_layer_index][0].set_pixel(cur_pos_x, mirror_y, color)
+									mouse_press_pixels.append(pos_floored)
+									mouse_press_pressure_values.append(pen_pressure)
+									layers[current_layer_index][0].set_pixel(cur_pos_x, mirror_y, _c)
 									sprite_changed_this_frame = true
 							if horizontal_mirror && vertical_mirror:
 								current_pixel_color = layers[current_layer_index][0].get_pixel(mirror_x, mirror_y)
-								if current_pixel_color != color: # don't draw the same pixel over and over
+								if current_pixel_color != _c: # don't draw the same pixel over and over
 									if current_action == "LightenDarken":
 										if ld == 0: # Lighten
-											color = current_pixel_color.lightened(ld_amount)
+											_c = current_pixel_color.lightened(ld_amount)
 										else:
-											color = current_pixel_color.darkened(ld_amount)
-										lighten_darken_pixels.append(pos_floored)
+											_c = current_pixel_color.darkened(ld_amount)
 
-									layers[current_layer_index][0].set_pixel(mirror_x, mirror_y, color)
+									mouse_press_pixels.append(pos_floored)
+									mouse_press_pressure_values.append(pen_pressure)
+									layers[current_layer_index][0].set_pixel(mirror_x, mirror_y, _c)
 									sprite_changed_this_frame = true
 
-		elif brush_type == Global.BRUSH_TYPES.CIRCLE || brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE:
-			plot_circle(layers[current_layer_index][0], pos.x, pos.y, brush_size, color, brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE)
+		elif brush_type == Global.Brush_Types.CIRCLE || brush_type == Global.Brush_Types.FILLED_CIRCLE:
+			plot_circle(layers[current_layer_index][0], pos.x, pos.y, brush_size, color, brush_type == Global.Brush_Types.FILLED_CIRCLE)
 
 			# Handle mirroring
 			var mirror_x := east_limit + west_limit - pos.x
 			var mirror_y := south_limit + north_limit - pos.y
 			if horizontal_mirror:
-				plot_circle(layers[current_layer_index][0], mirror_x, pos.y, brush_size, color, brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE)
+				plot_circle(layers[current_layer_index][0], mirror_x, pos.y, brush_size, color, brush_type == Global.Brush_Types.FILLED_CIRCLE)
 			if vertical_mirror:
-				plot_circle(layers[current_layer_index][0], pos.x, mirror_y, brush_size, color, brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE)
+				plot_circle(layers[current_layer_index][0], pos.x, mirror_y, brush_size, color, brush_type == Global.Brush_Types.FILLED_CIRCLE)
 			if horizontal_mirror && vertical_mirror:
-				plot_circle(layers[current_layer_index][0], mirror_x, mirror_y, brush_size, color, brush_type == Global.BRUSH_TYPES.FILLED_CIRCLE)
+				plot_circle(layers[current_layer_index][0], mirror_x, mirror_y, brush_size, color, brush_type == Global.Brush_Types.FILLED_CIRCLE)
 
 			sprite_changed_this_frame = true
 
@@ -767,13 +797,13 @@ func fill_gaps(mouse_pos : Vector2, prev_mouse_pos : Vector2, color : Color, cur
 	var dx := int(abs(mouse_pos_floored.x - previous_mouse_pos_floored.x))
 	var dy := int(-abs(mouse_pos_floored.y - previous_mouse_pos_floored.y))
 	var err := dx + dy
-	var e2 := err << 1 #err * 2
+	var e2 := err << 1 # err * 2
 	var sx = 1 if previous_mouse_pos_floored.x < mouse_pos_floored.x else -1
 	var sy = 1 if previous_mouse_pos_floored.y < mouse_pos_floored.y else -1
 	var x = previous_mouse_pos_floored.x
 	var y = previous_mouse_pos_floored.y
 	while !(x == mouse_pos_floored.x && y == mouse_pos_floored.y):
-		draw_pixel(Vector2(x, y), color, current_mouse_button, current_action)
+		draw_brush(Vector2(x, y), color, current_mouse_button, current_action)
 		e2 = err << 1
 		if e2 >= dy:
 			err += dy
@@ -830,14 +860,11 @@ func plot_circle(sprite : Image, xm : int, ym : int, r : int, color : Color, fil
 		var quadrant_2 := Vector2(xm - y, ym - x)
 		var quadrant_3 := Vector2(xm + x, ym - y)
 		var quadrant_4 := Vector2(xm + y, ym + x)
-		if point_in_rectangle(quadrant_1, Vector2(west_limit - 1, north_limit - 1), Vector2(east_limit, south_limit)):
-			sprite.set_pixelv(quadrant_1, color)
-		if point_in_rectangle(quadrant_2, Vector2(west_limit - 1, north_limit - 1), Vector2(east_limit, south_limit)):
-			sprite.set_pixelv(quadrant_2, color)
-		if point_in_rectangle(quadrant_3, Vector2(west_limit - 1, north_limit - 1), Vector2(east_limit, south_limit)):
-			sprite.set_pixelv(quadrant_3, color)
-		if point_in_rectangle(quadrant_4, Vector2(west_limit - 1, north_limit - 1), Vector2(east_limit, south_limit)):
-			sprite.set_pixelv(quadrant_4, color)
+		draw_pixel_blended(sprite, quadrant_1, color)
+		draw_pixel_blended(sprite, quadrant_2, color)
+		draw_pixel_blended(sprite, quadrant_3, color)
+		draw_pixel_blended(sprite, quadrant_4, color)
+
 		r = err
 		if r <= y:
 			y += 1
@@ -851,8 +878,30 @@ func plot_circle(sprite : Image, xm : int, ym : int, r : int, color : Color, fil
 			for i in range (-radius, radius + 1):
 				if i * i + j * j <= radius * radius:
 					var draw_pos := Vector2(i + xm, j + ym)
-					if point_in_rectangle(draw_pos, Vector2(west_limit - 1, north_limit - 1), Vector2(east_limit, south_limit)):
-						sprite.set_pixelv(draw_pos, color)
+					draw_pixel_blended(sprite, draw_pos, color)
+
+func draw_pixel_blended(sprite : Image, pos : Vector2, color : Color) -> void:
+	var saved_pixel_index := mouse_press_pixels.find(pos)
+	if point_in_rectangle(pos, Vector2(west_limit - 1, north_limit - 1), Vector2(east_limit, south_limit)) && (saved_pixel_index == -1 || pen_pressure > mouse_press_pressure_values[saved_pixel_index]):
+		if color.a > 0 && color.a < 1:
+			color = blend_colors(color, sprite.get_pixelv(pos))
+
+		if saved_pixel_index == -1:
+			mouse_press_pixels.append(pos)
+			mouse_press_pressure_values.append(pen_pressure)
+		else:
+			mouse_press_pressure_values[saved_pixel_index] = pen_pressure
+		sprite.set_pixelv(pos, color)
+
+func blend_colors(color_1 : Color, color_2 : Color) -> Color:
+	var color := Color()
+	color.a = color_1.a + color_2.a * (1 - color_1.a) # Blend alpha
+	if color.a != 0:
+		# Blend colors
+		color.r = (color_1.r * color_1.a + color_2.r * color_2.a * (1-color_1.a)) / color.a
+		color.g = (color_1.g * color_1.a + color_2.g * color_2.a * (1-color_1.a)) / color.a
+		color.b = (color_1.b * color_1.a + color_2.b * color_2.a * (1-color_1.a)) / color.a
+	return color
 
 # Checks if a point is inside a rectangle
 func point_in_rectangle(p : Vector2, coord1 : Vector2, coord2 : Vector2) -> bool:
@@ -879,13 +928,8 @@ func blend_rect(bg : Image, brush : Image, src_rect : Rect2, dst : Vector2) -> v
 			var dst_x := dest_rect.position.x + x;
 			var dst_y := dest_rect.position.y + y;
 
-			var out_color := Color()
 			var brush_color := brush.get_pixel(src_x, src_y)
 			var bg_color := bg.get_pixel(dst_x, dst_y)
-			out_color.a = brush_color.a + bg_color.a * (1 - brush_color.a)
-			# Blend the colors
+			var out_color := blend_colors(brush_color, bg_color)
 			if out_color.a != 0:
-				out_color.r = (brush_color.r * brush_color.a + bg_color.r * bg_color.a * (1 - brush_color.a)) / out_color.a
-				out_color.g = (brush_color.g * brush_color.a + bg_color.g * bg_color.a * (1 - brush_color.a)) / out_color.a
-				out_color.b = (brush_color.b * brush_color.a + bg_color.b * bg_color.a * (1 - brush_color.a)) / out_color.a
 				bg.set_pixel(dst_x, dst_y, out_color)

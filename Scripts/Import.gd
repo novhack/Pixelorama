@@ -2,7 +2,7 @@ extends Node
 
 func import_brushes(path : String) -> void:
 	var brushes_dir := Directory.new()
-	brushes_dir.open(".")
+	brushes_dir.open(Global.root_directory)
 	if !brushes_dir.dir_exists(path):
 		brushes_dir.make_dir(path)
 
@@ -16,6 +16,7 @@ func import_brushes(path : String) -> void:
 func find_brushes(brushes_dir : Directory, path : String) -> Array:
 	var subdirectories := []
 	var found_random_brush := 0
+	path = Global.root_directory.plus_file(path)
 	brushes_dir.open(path)
 	brushes_dir.list_dir_begin(true)
 	var file := brushes_dir.get_next()
@@ -29,14 +30,14 @@ func find_brushes(brushes_dir : Directory, path : String) -> Array:
 						found_random_brush = Global.file_brush_container.get_child_count()
 						image.convert(Image.FORMAT_RGBA8)
 						Global.custom_brushes.append(image)
-						Global.create_brush_button(image, Global.BRUSH_TYPES.RANDOM_FILE, file.trim_suffix(".png"))
+						Global.create_brush_button(image, Global.Brush_Types.RANDOM_FILE, file.trim_suffix(".png"))
 					else:
 						var brush_button = Global.file_brush_container.get_child(found_random_brush)
 						brush_button.random_brushes.append(image)
 				else:
 					image.convert(Image.FORMAT_RGBA8)
 					Global.custom_brushes.append(image)
-					Global.create_brush_button(image, Global.BRUSH_TYPES.FILE, file.trim_suffix(".png"))
+					Global.create_brush_button(image, Global.Brush_Types.FILE, file.trim_suffix(".png"))
 		elif file.get_extension() == "": # Probably a directory
 			var subdir := "./%s" % [file]
 			if brushes_dir.dir_exists(subdir): # If it's an actual directory

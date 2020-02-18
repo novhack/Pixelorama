@@ -5,7 +5,6 @@ var opensprite_file_selected := false
 var file_menu : PopupMenu
 var view_menu : PopupMenu
 var tools := []
-
 var redone := false
 var previous_left_color := Color.black
 var previous_right_color := Color.white
@@ -23,7 +22,7 @@ func _ready() -> void:
 		Global.loaded_locales = TranslationServer.get_loaded_locales()
 	else:
 		# Hardcoded list of locales
-		Global.loaded_locales = ["de_DE", "el_GR", "en_US", "es_ES", "fr_FR", "it_IT", "pl_PL", "pt_BR", "ru_RU", "zh_TW"]
+		Global.loaded_locales = ["de_DE", "el_GR", "en_US", "es_ES", "fr_FR", "it_IT", "lv_LV", "pl_PL", "pt_BR", "ru_RU", "zh_CN","zh_TW"]
 
 	# Make sure locales are always sorted, in the same order
 	Global.loaded_locales.sort()
@@ -60,13 +59,15 @@ func _ready() -> void:
 		"Tile Mode" : KEY_MASK_CMD + KEY_T,
 		"Show Grid" : KEY_MASK_CMD + KEY_G,
 		"Show Rulers" : KEY_MASK_CMD + KEY_R,
-		"Show Guides" : KEY_MASK_CMD + KEY_F
+		"Show Guides" : KEY_MASK_CMD + KEY_F,
+		"Show Animation Timeline" : 0
 		}
 	var image_menu_items := {
 		"Scale Image" : 0,
 		"Crop Image" : 0,
 		"Flip Horizontal" : KEY_MASK_SHIFT + KEY_H,
 		"Flip Vertical" : KEY_MASK_SHIFT + KEY_V,
+		"Rotate Image" : 0,
 		"Invert colors" : 0,
 		"Desaturation" : 0,
 		"Outline" : 0
@@ -114,13 +115,14 @@ func _ready() -> void:
 	for item in view_menu_items.keys():
 		view_menu.add_check_item(item, i, view_menu_items[item])
 		i += 1
-	view_menu.set_item_checked(2, true) #Show Rulers
-	view_menu.set_item_checked(3, true) #Show Guides
+	view_menu.set_item_checked(2, true) # Show Rulers
+	view_menu.set_item_checked(3, true) # Show Guides
+	view_menu.set_item_checked(4, true) # Show Animation Timeline
 	view_menu.hide_on_checkable_item_selection = false
 	i = 0
 	for item in image_menu_items.keys():
 		image_menu.add_item(item, i, image_menu_items[item])
-		if i == 3:
+		if i == 4:
 			image_menu.add_separator()
 		i += 1
 	i = 0
@@ -151,17 +153,27 @@ func _ready() -> void:
 		Global.left_color_picker.get_picker().move_child(Global.left_color_picker.get_picker().get_child(0), 1)
 		Global.right_color_picker.get_picker().move_child(Global.right_color_picker.get_picker().get_child(0), 1)
 
-	Import.import_brushes("Brushes")
-
-	if not Global.config_cache.has_section_key("preferences", "startup"):
-		Global.config_cache.set_value("preferences", "startup", true)
-	if not Global.config_cache.get_value("preferences", "startup"):
-		$SplashDialog.hide()
+	if OS.get_cmdline_args():
+		for arg in OS.get_cmdline_args():
+			if arg.get_extension().to_lower() == "pxo":
+				_on_OpenSprite_file_selected(arg)
+			else:
+				$ImportSprites._on_ImportSprites_files_selected([arg])
 
 	OS.set_window_title("(" + tr("untitled") + ") - Pixelorama")
 
 	Global.canvas.layers[0][2] = tr("Layer") + " 0"
 	Global.canvas.generate_layer_panels()
+
+	Import.import_brushes("Brushes")
+
+	$MenuAndUI/UI/ToolPanel/Tools/ColorAndToolOptions/ColorButtonsVertical/ColorPickersCenter/ColorPickersHorizontal/LeftColorPickerButton.get_picker().presets_visible = false
+	$MenuAndUI/UI/ToolPanel/Tools/ColorAndToolOptions/ColorButtonsVertical/ColorPickersCenter/ColorPickersHorizontal/RightColorPickerButton.get_picker().presets_visible = false
+
+	if not Global.config_cache.has_section_key("preferences", "startup"):
+		Global.config_cache.set_value("preferences", "startup", true)
+	if not Global.config_cache.get_value("preferences", "startup"):
+		$SplashDialog.hide()
 
 	# Wait for the window to adjust itself, so the popup is correctly centered
 	yield(get_tree().create_timer(0.01), "timeout")
@@ -244,7 +256,7 @@ func edit_menu_id_pressed(id : int) -> void:
 			Global.selected_pixels.clear()
 			Global.canvas.handle_redo("Rectangle Select")
 		3: # Preferences
-			$PreferencesDialog.popup_centered(Vector2(300, 280))
+			$PreferencesDialog.popup_centered(Vector2(400, 280))
 			Global.can_draw = false
 
 func view_menu_id_pressed(id : int) -> void:
@@ -267,6 +279,10 @@ func view_menu_id_pressed(id : int) -> void:
 				for guide in canvas.get_children():
 					if guide is Guide:
 						guide.visible = Global.show_guides
+		4: # Show animation timeline
+			Global.show_animation_timeline = !Global.show_animation_timeline
+			view_menu.set_item_checked(4, Global.show_animation_timeline)
+			Global.animation_timeline.visible = Global.show_animation_timeline
 
 	Global.canvas.update()
 
@@ -322,7 +338,11 @@ func image_menu_id_pressed(id : int) -> void:
 			canvas.layers[canvas.current_layer_index][0].flip_y()
 			canvas.layers[canvas.current_layer_index][0].lock()
 			canvas.handle_redo("Draw")
-		4: # Invert Colors
+		4: # Rotate
+			var image : Image = Global.canvas.layers[Global.canvas.current_layer_index][0]
+			$RotateImage.set_sprite(image)
+			$RotateImage.popup_centered()
+		5: # Invert Colors
 			var image : Image = Global.canvas.layers[Global.canvas.current_layer_index][0]
 			Global.canvas.handle_undo("Draw")
 			for xx in image.get_size().x:
@@ -332,7 +352,7 @@ func image_menu_id_pressed(id : int) -> void:
 						continue
 					image.set_pixel(xx, yy, px_color)
 			Global.canvas.handle_redo("Draw")
-		5: # Desaturation
+		6: # Desaturation
 			var image : Image = Global.canvas.layers[Global.canvas.current_layer_index][0]
 			Global.canvas.handle_undo("Draw")
 			for xx in image.get_size().x:
@@ -344,7 +364,7 @@ func image_menu_id_pressed(id : int) -> void:
 					px_color = Color(gray, gray, gray, px_color.a)
 					image.set_pixel(xx, yy, px_color)
 			Global.canvas.handle_redo("Draw")
-		6: # Outline
+		7: # Outline
 			$OutlineDialog.popup_centered()
 
 func help_menu_id_pressed(id : int) -> void:
@@ -355,7 +375,7 @@ func help_menu_id_pressed(id : int) -> void:
 		1: # Issue Tracker
 			OS.shell_open("https://github.com/Orama-Interactive/Pixelorama/issues")
 		2: # Changelog
-			OS.shell_open("https://github.com/Orama-Interactive/Pixelorama/blob/master/Changelog.md#v061---13-01-2020")
+			OS.shell_open("https://github.com/Orama-Interactive/Pixelorama/blob/master/Changelog.md#v062---17-02-2020")
 		3: # About Pixelorama
 			$AboutDialog.popup_centered()
 			Global.can_draw = false
@@ -403,7 +423,7 @@ func _on_OpenSprite_file_selected(path : String) -> void:
 			var guide := Guide.new()
 			guide.default_color = Color.purple
 			guide.type = file.get_8()
-			if guide.type == guide.TYPE.HORIZONTAL:
+			if guide.type == guide.Types.HORIZONTAL:
 				guide.add_point(Vector2(-99999, file.get_16()))
 				guide.add_point(Vector2(99999, file.get_16()))
 			else:
@@ -452,6 +472,13 @@ func _on_OpenSprite_file_selected(path : String) -> void:
 
 	file.close()
 
+	current_save_path = path
+	$SaveSprite.current_path = path
+	$ExportSprites.current_export_path = path.trim_suffix(".pxo") + ".png"
+	$ExportSprites.current_path = $ExportSprites.current_export_path
+	file_menu.set_item_text(2, tr("Save") + " %s" % path.get_file())
+	file_menu.set_item_text(5, tr("Export") + " %s" % $ExportSprites.current_path.get_file())
+
 	OS.set_window_title(path.get_file() + " - Pixelorama")
 
 
@@ -463,7 +490,7 @@ func _on_SaveSprite_file_selected(path : String) -> void:
 	file_menu.set_item_text(5, tr("Export") + " %s" % $ExportSprites.current_path.get_file())
 	var file := File.new()
 	var err := file.open(path, File.WRITE)
-	if err == 0:
+	if err == OK:
 		file.store_line(ProjectSettings.get_setting("application/config/Version"))
 		for canvas in Global.canvases: # Store frames
 			file.store_line("--")
@@ -480,7 +507,7 @@ func _on_SaveSprite_file_selected(path : String) -> void:
 				if child is Guide:
 					file.store_line("|")
 					file.store_8(child.type)
-					if child.type == child.TYPE.HORIZONTAL:
+					if child.type == child.Types.HORIZONTAL:
 						file.store_16(child.points[0].y)
 						file.store_16(child.points[1].y)
 					else:
@@ -559,7 +586,7 @@ func _on_Tool_pressed(tool_pressed : BaseButton, mouse_press := true, key_for_le
 			Global.left_brush_type_container.visible = true
 			Global.left_brush_size_container.visible = true
 			Global.left_mirror_container.visible = true
-			if Global.current_left_brush_type == Global.BRUSH_TYPES.FILE || Global.current_left_brush_type == Global.BRUSH_TYPES.CUSTOM || Global.current_left_brush_type == Global.BRUSH_TYPES.RANDOM_FILE:
+			if Global.current_left_brush_type == Global.Brush_Types.FILE || Global.current_left_brush_type == Global.Brush_Types.CUSTOM || Global.current_left_brush_type == Global.Brush_Types.RANDOM_FILE:
 				Global.left_color_interpolation_container.visible = true
 		elif current_action == "Eraser":
 			Global.left_brush_type_container.visible = true
@@ -586,7 +613,7 @@ func _on_Tool_pressed(tool_pressed : BaseButton, mouse_press := true, key_for_le
 			Global.right_brush_type_container.visible = true
 			Global.right_brush_size_container.visible = true
 			Global.right_mirror_container.visible = true
-			if Global.current_right_brush_type == Global.BRUSH_TYPES.FILE || Global.current_right_brush_type == Global.BRUSH_TYPES.CUSTOM || Global.current_right_brush_type == Global.BRUSH_TYPES.RANDOM_FILE:
+			if Global.current_right_brush_type == Global.Brush_Types.FILE || Global.current_right_brush_type == Global.Brush_Types.CUSTOM || Global.current_right_brush_type == Global.Brush_Types.RANDOM_FILE:
 				Global.right_color_interpolation_container.visible = true
 		elif current_action == "Eraser":
 			Global.right_brush_type_container.visible = true

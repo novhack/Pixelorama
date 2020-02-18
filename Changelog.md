@@ -3,27 +3,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [v0.6.2] - Unreleased
+## [v0.6.2] - 17-02-2020
 
-## Added
+### Added
+- Image layer rotation! Choose between 2 rotation algorithms, Rotxel and Nearest Neighbour - Thanks to azagaya!
 - Crowdin integration for contributing translations!
-- Spanish translation - thanks to azagaya!
+- Spanish translation - thanks to azagaya & Lilly And!
+- Chinese Simplified translation - thanks to Chenxu Wang!
+- Latvian translation - thanks to Agnis Aldiņš (NeZvers)!
 - Translators can now be seen in the About window.
 - It is now possible to remove custom brushes with the middle mouse button.
 - Added HSV mode to the color picker. (Added automatically because of the Godot 3.2 update)
+- Lanczos scaling interpolation. (Added because of the Godot 3.2 update)
+- You can now drag and drop (or right click and open with) image and .pxo files in Pixelorama.
+- You can now hide the animation timeline - Thanks to YeldhamDev!
 
-## Changed
-- Updates to the Greek, Russian and Traditional Chinese translations.
+### Changed
+- Major changes to alpha blending behavior. The alpha values now get added/blended together instead of just replacing the pixel with the new value.
 - Replaced some OS alerts with a custom made error dialog.
+- Made the zooming smoother, is toggleable in Preferences whether to keep the new zooming or the old one.
+- The camera now zooms at the mouse's position.
 - Made the "X" button on the custom brushes a little smaller.
 - The color picker will now have a small white triangle on the top left of the color preview if at least one of its RGB values are above 1 in Raw mode. (Added automatically because of the Godot 3.2 update)
 - You can now toggle the visibility of hidden items on and off in the file dialogs. (Added automatically because of the Godot 3.2 update)
+- The language buttons in the preferences have their localized names in their hint tooltips. For example, if you hover over the "English" button while the language is Greek, the hint tooltip will be "Αγγλικά", which is the Greek word for English.
+- Translation updates.
+- The presets in the ColorPickers are now hidden - Thanks to YeldhamDev!
+- When opening a project (.pxo file), the save path is being set to the opened project's path - Thanks to YeldhamDev!
 
 ### Fixed
-- Delay the splash screen popup so it shows properly centered (thanks to YeldhamDev)
+- Delay the splash screen popup so it shows properly centered - Thanks to YeldhamDev!
 - Possibly fixed crashes with motion drawing and undo/redoing.
 - Fixed bug (which also caused crashes sometimes) when generating an outline inside the image and it was going outside the canvas' borders.
 - Fixed crash when importing images that were failing to load. They still fail to load, but Pixelorama does not crash.
+- Possibly fixed a rare crash where the cursor image was failing to load. It is now being loaded only once.
+- Fixed ruler markings cutting off before they should - Thanks to YeldhamDev!
+- Fixed bug where resizing the image on export and moving selection content were not working on Godot 3.2 - Issues #161 and #162
 
 ## [v0.6.1] - 13-01-2020
 

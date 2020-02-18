@@ -53,7 +53,7 @@ func _draw() -> void:
 	first = (transform * ruler_transform * major_subdivide * minor_subdivide).affine_inverse().xform(Vector2.ZERO)
 	last = (transform * ruler_transform * major_subdivide * minor_subdivide).affine_inverse().xform(Global.main_viewport.rect_size)
 
-	for i in range(ceil(first.y), last.y):
+	for i in range(ceil(first.y), ceil(last.y)):
 		var position : Vector2 = (transform * ruler_transform * major_subdivide * minor_subdivide).xform(Vector2(0, i))
 		if i % (major_subdivision * minor_subdivision) == 0:
 			draw_line(Vector2(0, position.y), Vector2(RULER_WIDTH, position.y), Color.white)
@@ -72,7 +72,7 @@ func _on_VerticalRuler_pressed() -> void:
 	if !Global.show_guides:
 		return
 	var guide := Guide.new()
-	guide.type = guide.TYPE.VERTICAL
+	guide.type = guide.Types.VERTICAL
 	guide.add_point(Vector2(Global.canvas.current_pixel.x, -99999))
 	guide.add_point(Vector2(Global.canvas.current_pixel.x, 99999))
 	Global.canvas.add_child(guide)

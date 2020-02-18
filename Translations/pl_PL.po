@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2020-01-26 21:58\n"
+"PO-Revision-Date: 2020-02-15 13:20\n"
 
 msgid "OK"
 msgstr "OK"
@@ -118,6 +118,9 @@ msgstr "Pokaż linijki"
 msgid "Show Guides"
 msgstr "Pokaż prowadnice"
 
+msgid "Show Animation Timeline"
+msgstr ""
+
 msgid "Fill with color:"
 msgstr "Wypełnij kolorem:"
 
@@ -194,6 +197,9 @@ msgstr "Sześcienna"
 msgid "Trilinear"
 msgstr "Trójlinowa"
 
+msgid "General"
+msgstr ""
+
 msgid "Language"
 msgstr ""
 
@@ -201,6 +207,21 @@ msgid "Themes"
 msgstr ""
 
 msgid "Guides & Grid"
+msgstr ""
+
+msgid "General Options"
+msgstr ""
+
+msgid "Smooth Zoom"
+msgstr ""
+
+msgid "Tablet pressure sensitivity:"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Affect Brush's Alpha"
 msgstr ""
 
 msgid "Language options"
@@ -305,10 +326,16 @@ msgstr ""
 msgid "Russian"
 msgstr ""
 
+msgid "Chinese Simplified"
+msgstr ""
+
 msgid "Chinese Traditional"
 msgstr ""
 
 msgid "Italian"
+msgstr ""
+
+msgid "Latvian"
 msgstr ""
 
 msgid "Spanish"

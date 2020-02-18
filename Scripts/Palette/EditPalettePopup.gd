@@ -1,15 +1,18 @@
 extends WindowDialog
 
-onready var color_picker = $VBoxContainer/HBoxContainer/EditPaletteColorPicker
-onready var palette_grid = $VBoxContainer/HBoxContainer/Panel/ScrollContainer/EditPaletteGridContainer
-onready var color_name_edit = $VBoxContainer/PaletteOptions/EditPaletteColorNameLineEdit
-onready var palette_name_edit = $VBoxContainer/PaletteOptions/EditPaletteNameLineEdit
-
 var palette_button = preload("res://Prefabs/PaletteButton.tscn")
 
 var current_palette : String
 var current_swatch := -1
 var working_palette : Palette
+
+onready var color_picker = $VBoxContainer/HBoxContainer/EditPaletteColorPicker
+onready var palette_grid = $VBoxContainer/HBoxContainer/Panel/ScrollContainer/EditPaletteGridContainer
+onready var color_name_edit = $VBoxContainer/PaletteOptions/EditPaletteColorNameLineEdit
+onready var palette_name_edit = $VBoxContainer/PaletteOptions/EditPaletteNameLineEdit
+
+func _ready() -> void:
+	$VBoxContainer/HBoxContainer/EditPaletteColorPicker.presets_visible = false
 
 func open(palette : String) -> void:
 	current_palette = palette
@@ -101,7 +104,7 @@ func _on_EditPaletteSaveButton_pressed() -> void:
 	if palette_name_edit.text != current_palette:
 		Global.palettes.erase(current_palette)
 		var dir := Directory.new()
-		dir.open(".")
+		dir.open(Global.root_directory)
 		dir.rename("Palettes".plus_file(current_palette + ".json"), "Palettes".plus_file(palette_name_edit.text + ".json"))
 		current_palette = palette_name_edit.text
 		working_palette.name = current_palette
