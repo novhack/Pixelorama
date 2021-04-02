@@ -11,7 +11,7 @@ onready var right_panel := $MenuAndUI/UI/RightPanel
 onready var tool_and_palette_vsplit := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit
 onready var color_and_tool_options := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit/ColorAndToolOptions
 onready var canvas_preview_container := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/CanvasPreviewContainer
-onready var tool_panel := $MenuAndUI/UI/ToolPanel
+onready var tool_panel := $MenuAndUI/UI/ToolsPanel
 onready var scroll_container := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit/ColorAndToolOptions/ScrollContainer
 
 # Called when the node enters the scene tree for the first time.

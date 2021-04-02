@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/UI/ToolButtons.gd" type="Script" id=1]
 [ext_resource path="res://src/UI/Canvas/CanvasPreview.tscn" type="PackedScene" id=2]
@@ -23,10 +23,12 @@
 [ext_resource path="res://assets/graphics/dark_themes/tools/zoom.png" type="Texture" id=21]
 [ext_resource path="res://assets/graphics/dark_themes/tools/pan.png" type="Texture" id=22]
 [ext_resource path="res://src/UI/ViewportContainer.gd" type="Script" id=23]
+[ext_resource path="res://assets/themes/dark/theme.tres" type="Theme" id=24]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 9 )
 shader_param/size = 10.0
+shader_param/alpha = 1.0
 shader_param/color1 = Color( 0.7, 0.7, 0.7, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 shader_param/offset = Vector2( 0, 0 )
@@ -38,6 +40,7 @@ shader_param/follow_scale = false
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 9 )
 shader_param/size = 10.0
+shader_param/alpha = 1.0
 shader_param/color1 = Color( 0.7, 0.7, 0.7, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 shader_param/offset = Vector2( 0, 0 )
@@ -56,43 +59,41 @@ margin_right = 1280.0
 margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource( 24 )
 custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false,
 "_edit_vertical_guides_": [  ]
 }
 
-[node name="ToolPanel" type="Panel" parent="."]
-margin_right = 48.0
+[node name="ToolsPanel" type="Panel" parent="."]
+margin_right = 44.0
 margin_bottom = 692.0
-rect_min_size = Vector2( 48, 0 )
+rect_min_size = Vector2( 44, 0 )
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="ToolPanel"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -20.5
-margin_right = -6.5
-margin_bottom = 14.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+[node name="PanelContainer" type="PanelContainer" parent="ToolsPanel"]
+anchor_right = 1.0
+margin_right = -3.8147e-06
+margin_bottom = 293.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ToolButtons" type="VBoxContainer" parent="ToolPanel/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 39.0
-margin_bottom = 291.0
+[node name="ToolButtons" type="VBoxContainer" parent="ToolsPanel/PanelContainer"]
+margin_left = 6.0
+margin_top = 2.0
+margin_right = 38.0
+margin_bottom = 286.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
+custom_constants/separation = 4
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RectSelect" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="RectSelect" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_right = 32.0
@@ -101,7 +102,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/RectSelect"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/RectSelect"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 12 )
@@ -109,7 +110,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Zoom" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="Zoom" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 36.0
@@ -119,7 +120,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/Zoom"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/Zoom"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 21 )
@@ -127,7 +128,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Pan" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="Pan" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 72.0
@@ -137,7 +138,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/Pan"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/Pan"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 22 )
@@ -145,7 +146,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPicker" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="ColorPicker" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 108.0
@@ -155,7 +156,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/ColorPicker"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/ColorPicker"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 11 )
@@ -163,7 +164,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Pencil" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="Pencil" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 144.0
@@ -173,7 +174,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/Pencil"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/Pencil"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 14 )
@@ -181,7 +182,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Eraser" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="Eraser" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 180.0
@@ -191,7 +192,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/Eraser"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/Eraser"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 13 )
@@ -199,7 +200,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bucket" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="Bucket" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 216.0
@@ -209,7 +210,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/Bucket"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/Bucket"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 10 )
@@ -217,7 +218,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LightenDarken" type="Button" parent="ToolPanel/PanelContainer/ToolButtons" groups=[
+[node name="LightenDarken" type="Button" parent="ToolsPanel/PanelContainer/ToolButtons" groups=[
 "UIButtons",
 ]]
 margin_top = 252.0
@@ -227,7 +228,7 @@ rect_min_size = Vector2( 32, 32 )
 mouse_default_cursor_shape = 2
 button_mask = 3
 
-[node name="TextureRect" type="TextureRect" parent="ToolPanel/PanelContainer/ToolButtons/LightenDarken"]
+[node name="TextureRect" type="TextureRect" parent="ToolsPanel/PanelContainer/ToolButtons/LightenDarken"]
 margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 15 )
@@ -236,37 +237,37 @@ __meta__ = {
 }
 
 [node name="CanvasAndTimeline" type="VSplitContainer" parent="."]
-margin_left = 48.0
+margin_left = 44.0
 margin_right = 950.0
 margin_bottom = 692.0
 size_flags_horizontal = 3
 custom_constants/autohide = 0
 
 [node name="ViewportAndRulers" type="VBoxContainer" parent="CanvasAndTimeline"]
-margin_right = 902.0
-margin_bottom = 480.0
+margin_right = 906.0
+margin_bottom = 484.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="TabsContainer" type="PanelContainer" parent="CanvasAndTimeline/ViewportAndRulers"]
-margin_right = 902.0
-margin_bottom = 38.0
+margin_right = 906.0
+margin_bottom = 29.0
 
 [node name="Tabs" type="Tabs" parent="CanvasAndTimeline/ViewportAndRulers/TabsContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 895.0
-margin_bottom = 31.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 904.0
+margin_bottom = 27.0
 tab_align = 0
 tab_close_display_policy = 1
 drag_to_rearrange_enabled = true
 script = ExtResource( 3 )
 
 [node name="HorizontalRuler" type="Button" parent="CanvasAndTimeline/ViewportAndRulers"]
-margin_top = 38.0
-margin_right = 902.0
-margin_bottom = 58.0
+margin_top = 29.0
+margin_right = 906.0
+margin_bottom = 52.0
 rect_min_size = Vector2( 0, 16 )
 focus_mode = 0
 mouse_default_cursor_shape = 14
@@ -275,22 +276,22 @@ enabled_focus_mode = 0
 script = ExtResource( 6 )
 
 [node name="HSplitContainer" type="HSplitContainer" parent="CanvasAndTimeline/ViewportAndRulers"]
-margin_top = 58.0
-margin_right = 902.0
-margin_bottom = 480.0
+margin_top = 52.0
+margin_right = 906.0
+margin_bottom = 484.0
 size_flags_vertical = 3
 custom_constants/autohide = 0
 
 [node name="ViewportandVerticalRuler" type="HBoxContainer" parent="CanvasAndTimeline/ViewportAndRulers/HSplitContainer"]
-margin_right = 890.0
-margin_bottom = 422.0
+margin_right = 898.0
+margin_bottom = 432.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="VerticalRuler" type="Button" parent="CanvasAndTimeline/ViewportAndRulers/HSplitContainer/ViewportandVerticalRuler"]
 margin_right = 16.0
-margin_bottom = 422.0
+margin_bottom = 432.0
 rect_min_size = Vector2( 16, 0 )
 focus_mode = 0
 mouse_default_cursor_shape = 15
@@ -302,8 +303,8 @@ script = ExtResource( 4 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="CanvasAndTimeline/ViewportAndRulers/HSplitContainer/ViewportandVerticalRuler"]
 margin_left = 16.0
-margin_right = 890.0
-margin_bottom = 422.0
+margin_right = 898.0
+margin_bottom = 432.0
 focus_mode = 2
 mouse_default_cursor_shape = 3
 size_flags_horizontal = 3
@@ -312,7 +313,7 @@ stretch = true
 script = ExtResource( 23 )
 
 [node name="Viewport" type="Viewport" parent="CanvasAndTimeline/ViewportAndRulers/HSplitContainer/ViewportandVerticalRuler/ViewportContainer"]
-size = Vector2( 874, 422 )
+size = Vector2( 882, 432 )
 handle_input_locally = false
 usage = 0
 render_target_update_mode = 3
@@ -337,15 +338,15 @@ polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
 script = ExtResource( 8 )
 
 [node name="ViewportContainer2" type="ViewportContainer" parent="CanvasAndTimeline/ViewportAndRulers/HSplitContainer"]
-margin_left = 902.0
-margin_right = 902.0
-margin_bottom = 422.0
+margin_left = 906.0
+margin_right = 906.0
+margin_bottom = 432.0
 size_flags_vertical = 3
 stretch = true
 script = ExtResource( 23 )
 
 [node name="Viewport" type="Viewport" parent="CanvasAndTimeline/ViewportAndRulers/HSplitContainer/ViewportContainer2"]
-size = Vector2( 0, 422 )
+size = Vector2( 0, 432 )
 handle_input_locally = false
 render_target_update_mode = 3
 
@@ -361,12 +362,12 @@ script = ExtResource( 7 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasAndTimeline"]
 margin_top = 492.0
-margin_right = 902.0
+margin_right = 906.0
 margin_bottom = 692.0
 size_flags_horizontal = 3
 
 [node name="BottomPanel" type="VSplitContainer" parent="CanvasAndTimeline/HBoxContainer"]
-margin_right = 902.0
+margin_right = 906.0
 margin_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -374,6 +375,7 @@ custom_constants/autohide = 0
 
 [node name="AnimationTimeline" parent="CanvasAndTimeline/HBoxContainer/BottomPanel" instance=ExtResource( 18 )]
 margin_top = 0.0
+margin_right = 906.0
 margin_bottom = 200.0
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
@@ -397,9 +399,10 @@ __meta__ = {
 [node name="CanvasPreviewContainer" parent="RightPanel/PreviewAndPalettes" instance=ExtResource( 16 )]
 margin_left = 15.0
 margin_right = 315.0
+margin_bottom = 154.0
 
 [node name="ToolAndPaletteVSplit" type="VSplitContainer" parent="RightPanel/PreviewAndPalettes"]
-margin_top = 168.0
+margin_top = 158.0
 margin_right = 330.0
 margin_bottom = 676.0
 size_flags_horizontal = 3
@@ -407,13 +410,12 @@ size_flags_vertical = 3
 custom_constants/autohide = 0
 
 [node name="ColorAndToolOptions" parent="RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit" instance=ExtResource( 17 )]
-margin_bottom = 248.0
 
 [node name="PalettePanel" parent="RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit" instance=ExtResource( 20 )]
 margin_left = 15.0
-margin_top = 260.0
+margin_top = 263.0
 margin_right = 315.0
-margin_bottom = 508.0
+margin_bottom = 518.0
 [connection signal="reposition_active_tab_request" from="CanvasAndTimeline/ViewportAndRulers/TabsContainer/Tabs" to="CanvasAndTimeline/ViewportAndRulers/TabsContainer/Tabs" method="_on_Tabs_reposition_active_tab_request"]
 [connection signal="tab_changed" from="CanvasAndTimeline/ViewportAndRulers/TabsContainer/Tabs" to="CanvasAndTimeline/ViewportAndRulers/TabsContainer/Tabs" method="_on_Tabs_tab_changed"]
 [connection signal="tab_close" from="CanvasAndTimeline/ViewportAndRulers/TabsContainer/Tabs" to="CanvasAndTimeline/ViewportAndRulers/TabsContainer/Tabs" method="_on_Tabs_tab_close"]

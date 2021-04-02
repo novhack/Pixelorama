@@ -231,7 +231,7 @@ func _ready() -> void:
 	cursor_position_label = find_node_by_name(root, "CursorPosition")
 	zoom_level_label = find_node_by_name(root, "ZoomLevel")
 
-	tool_panel = control.get_node("MenuAndUI/UI/ToolPanel")
+	tool_panel = control.get_node("MenuAndUI/UI/ToolsPanel")
 	right_panel = control.get_node("MenuAndUI/UI/RightPanel")
 	tabs_container = control.get_node("MenuAndUI/UI/CanvasAndTimeline/ViewportAndRulers/TabsContainer")
 
