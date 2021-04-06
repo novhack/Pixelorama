@@ -8,11 +8,11 @@ var tallscreen_is_active = false
 onready var ui := $MenuAndUI/UI
 onready var bottom_panel := $MenuAndUI/UI/CanvasAndTimeline/HBoxContainer/BottomPanel
 onready var right_panel := $MenuAndUI/UI/RightPanel
-onready var tool_and_palette_vsplit := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit
-onready var color_and_tool_options := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit/ColorAndToolOptions
-onready var canvas_preview_container := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/CanvasPreviewContainer
+onready var tool_and_palette_vsplit := $MenuAndUI/UI/RightPanel/RightPanelMargin/PreviewAndPalettes/ToolAndPaletteVSplit
+onready var color_and_tool_options := $MenuAndUI/UI/RightPanel/RightPanelMargin/PreviewAndPalettes/ToolAndPaletteVSplit/ColorAndToolOptions
+onready var canvas_preview_container := $MenuAndUI/UI/RightPanel/RightPanelMargin/PreviewAndPalettes/CanvasPreviewContainer
 onready var tool_panel := $MenuAndUI/UI/ToolsPanel
-onready var scroll_container := $MenuAndUI/UI/RightPanel/PreviewAndPalettes/ToolAndPaletteVSplit/ColorAndToolOptions/ScrollContainer
+onready var scroll_container := $MenuAndUI/UI/RightPanel/RightPanelMargin/PreviewAndPalettes/ToolAndPaletteVSplit/ColorAndToolOptions/ScrollContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -82,7 +82,7 @@ func change_ui_layout(mode : String) -> void:
 	if mode == "tallscreen" and not tallscreen_is_active:
 		tallscreen_is_active = true
 		reparent_node_to(right_panel, bottom_panel, 0)
-		right_panel.rect_min_size.y = 300
+		right_panel.rect_min_size.y = 325
 		reparent_node_to(canvas_preview_container, tool_and_palette_vsplit, 1)
 		tool_and_palette_vsplit = replace_node_with(tool_and_palette_vsplit, HBoxContainer.new())
 		color_and_tool_options.rect_min_size.x = 280

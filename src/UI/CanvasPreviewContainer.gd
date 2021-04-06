@@ -5,6 +5,9 @@ onready var canvas_preview = $HBoxContainer/PreviewViewportContainer/Viewport/Ca
 onready var camera : Camera2D = $HBoxContainer/PreviewViewportContainer/Viewport/CameraPreview
 onready var play_button : Button = $HBoxContainer/VBoxContainer/PlayButton
 
+onready var preview_viewport = $HBoxContainer/PreviewViewportContainer/Viewport
+onready var preview_viewport_container = $HBoxContainer/PreviewViewportContainer
+
 
 func _on_PreviewZoomSlider_value_changed(value : float) -> void:
 	camera.zoom = -Vector2(value, value)
@@ -22,3 +25,7 @@ func _on_PlayButton_toggled(button_pressed : bool) -> void:
 	else:
 		canvas_preview.animation_timer.stop()
 		Global.change_button_texturerect(play_button.get_child(0), "play.png")
+
+
+func _on_PreviewViewportContainer_resized():
+	preview_viewport.size = preview_viewport_container.rect_size

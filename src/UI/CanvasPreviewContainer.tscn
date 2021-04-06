@@ -10,6 +10,7 @@
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 5 )
 shader_param/size = 10.0
+shader_param/alpha = 1.0
 shader_param/color1 = Color( 0.7, 0.7, 0.7, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 shader_param/offset = Vector2( 0, 0 )
@@ -22,8 +23,7 @@ shader_param/follow_scale = false
 margin_right = 278.0
 margin_bottom = 164.0
 rect_min_size = Vector2( 300, 0 )
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_horizontal = 3
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -93,12 +93,14 @@ __meta__ = {
 
 [node name="PreviewViewportContainer" type="ViewportContainer" parent="HBoxContainer"]
 margin_left = 24.0
-margin_right = 284.0
+margin_right = 286.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 0, 150 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Viewport" type="Viewport" parent="HBoxContainer/PreviewViewportContainer"]
-size = Vector2( 260, 150 )
+size = Vector2( 262, 150 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
@@ -115,3 +117,4 @@ zoom = Vector2( 0.15, 0.15 )
 script = ExtResource( 4 )
 [connection signal="value_changed" from="HBoxContainer/VBoxContainer/PreviewZoomSlider" to="." method="_on_PreviewZoomSlider_value_changed"]
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/PlayButton" to="." method="_on_PlayButton_toggled"]
+[connection signal="resized" from="HBoxContainer/PreviewViewportContainer" to="." method="_on_PreviewViewportContainer_resized"]
