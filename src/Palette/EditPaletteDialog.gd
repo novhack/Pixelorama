@@ -11,6 +11,7 @@ var origin_width := 0
 var origin_height := 0
 
 var old_name := ""
+var palettes_logic
 
 onready var name_input := $VBoxContainer/PaletteMetadata/Name
 onready var comment_input := $VBoxContainer/PaletteMetadata/Comment
@@ -93,7 +94,7 @@ func _on_size_value_changed(_value):
 
 func _on_Name_text_changed(new_name):
 	if old_name != new_name:
-		if Palettes.does_palette_exist(new_name):
+		if palettes_logic.does_palette_exist(new_name):
 			toggle_already_exists_warning(true)
 		else:
 			toggle_already_exists_warning(false)

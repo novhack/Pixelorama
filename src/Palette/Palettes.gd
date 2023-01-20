@@ -24,10 +24,6 @@ var left_selected_color := -1
 var right_selected_color := -1
 
 
-func _ready() -> void:
-	_load_palettes()
-
-
 func get_palettes() -> Dictionary:
 	return palettes
 
@@ -322,7 +318,7 @@ func _check_palette_settings_values(name: String, width: int, height: int) -> bo
 	return true
 
 
-func _load_palettes() -> void:
+func load_palettes() -> void:
 	Global.directory_module.ensure_xdg_user_dirs_exist()
 	var search_locations = Global.directory_module.get_palette_search_path_in_order()
 	var priority_ordered_files := _get_palette_priority_file_map(search_locations)

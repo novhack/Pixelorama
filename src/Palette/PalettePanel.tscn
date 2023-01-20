@@ -142,14 +142,15 @@ margin_top = 52.0
 margin_right = 22.0
 margin_bottom = 56.0
 
-[node name="ColorMatchingMode" type="Button" parent="PaletteVBoxContainer/SwatchesContainer/ColorButtons"]
+[node name="ColorMatchingModeButton" type="Button" parent="PaletteVBoxContainer/SwatchesContainer/ColorButtons"]
+unique_name_in_owner = true
 margin_top = 60.0
 margin_right = 22.0
 margin_bottom = 82.0
 rect_min_size = Vector2( 22, 22 )
 toggle_mode = true
 
-[node name="TextureRect" type="TextureRect" parent="PaletteVBoxContainer/SwatchesContainer/ColorButtons/ColorMatchingMode"]
+[node name="TextureRect" type="TextureRect" parent="PaletteVBoxContainer/SwatchesContainer/ColorButtons/ColorMatchingModeButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 7 )
@@ -248,6 +249,7 @@ margin_bottom = 111.0
 [connection signal="pressed" from="PaletteVBoxContainer/PaletteButtons/AddPalette" to="." method="_on_AddPalette_pressed"]
 [connection signal="gui_input" from="PaletteVBoxContainer/SwatchesContainer/ColorButtons/AddColor" to="." method="_on_AddColor_gui_input"]
 [connection signal="gui_input" from="PaletteVBoxContainer/SwatchesContainer/ColorButtons/DeleteColor" to="." method="_on_DeleteColor_gui_input"]
+[connection signal="toggled" from="PaletteVBoxContainer/SwatchesContainer/ColorButtons/ColorMatchingModeButton" to="." method="_on_ColorMatchingModeButton_toggled"]
 [connection signal="gui_input" from="PaletteVBoxContainer/SwatchesContainer/PaletteScroll" to="PaletteVBoxContainer/SwatchesContainer/PaletteScroll" method="_on_PaletteScroll_gui_input"]
 [connection signal="resized" from="PaletteVBoxContainer/SwatchesContainer/PaletteScroll" to="PaletteVBoxContainer/SwatchesContainer/PaletteScroll" method="_on_PaletteScroll_resized"]
 [connection signal="gui_input" from="PaletteVBoxContainer/SwatchesContainer/PaletteScroll/HBoxContainer/VBoxContainer/ScrollContainer/PaletteGrid" to="PaletteVBoxContainer/SwatchesContainer/PaletteScroll" method="_on_PaletteGrid_gui_input"]

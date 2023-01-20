@@ -5,6 +5,7 @@ signal saved(preset, name, comment, width, height, add_alpha_colors, colors_from
 
 # Reference to current palette stored when dialog opens
 var current_palette: Palette
+var palettes_logic
 
 onready var preset_input := $VBoxContainer/PaletteMetadata/Preset
 onready var name_input := $VBoxContainer/PaletteMetadata/Name
@@ -25,7 +26,7 @@ func open(opened_current_palette: Palette) -> void:
 	current_palette = opened_current_palette
 
 	set_default_values()
-	preset_input.selected = Palettes.NewPalettePresetType.EMPTY
+	preset_input.selected = palettes_logic.NewPalettePresetType.EMPTY
 	# Colors settings are only available for FROM_CURRENT_SPRITE and FROM_CURRENT_SELECTION presets
 	colors_settings.hide()
 
@@ -52,7 +53,7 @@ func set_default_values() -> void:
 	width_input.value = Palette.DEFAULT_WIDTH
 	height_input.value = Palette.DEFAULT_HEIGHT
 	alpha_colors_input.pressed = true
-	get_colors_from_input.selected = Palettes.GetColorsFrom.CURRENT_FRAME
+	get_colors_from_input.selected = palettes_logic.GetColorsFrom.CURRENT_FRAME
 
 
 # Shows/hides a warning when palette already exists
@@ -93,10 +94,10 @@ func _on_Preset_item_selected(index: int) -> void:
 	toggle_ok_button_disability(true)
 
 	match index:
-		Palettes.NewPalettePresetType.EMPTY:
+		palettes_logic.NewPalettePresetType.EMPTY:
 			colors_settings.hide()
 			set_default_values()
-		Palettes.NewPalettePresetType.FROM_CURRENT_PALETTE:
+		palettes_logic.NewPalettePresetType.FROM_CURRENT_PALETTE:
 			colors_settings.hide()
 			# If any palette was selected copy it's settings to dialog
 			if current_palette:
@@ -108,17 +109,17 @@ func _on_Preset_item_selected(index: int) -> void:
 				# Copying palette presets grid size
 				width_input.editable = false
 				height_input.editable = false
-		Palettes.NewPalettePresetType.FROM_CURRENT_SPRITE:
+		palettes_logic.NewPalettePresetType.FROM_CURRENT_SPRITE:
 			colors_settings.show()
 			set_default_values()
-		Palettes.NewPalettePresetType.FROM_CURRENT_SELECTION:
+		palettes_logic.NewPalettePresetType.FROM_CURRENT_SELECTION:
 			colors_settings.show()
 			set_default_values()
 
 
 func _on_Name_text_changed(new_name):
 	var disable_warning := false
-	if Palettes.does_palette_exist(new_name):
+	if palettes_logic.does_palette_exist(new_name):
 		disable_warning = true
 
 	toggle_already_exists_warning(disable_warning)

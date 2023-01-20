@@ -124,12 +124,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/UI/Timeline/LayerButton.gd"
 }, {
-"base": "Resource",
+"base": "Reference",
 "class": "Palette",
 "language": "GDScript",
 "path": "res://src/Palette/Palette.gd"
 }, {
-"base": "Resource",
+"base": "Reference",
 "class": "PaletteColor",
 "language": "GDScript",
 "path": "res://src/Palette/PaletteColor.gd"
@@ -287,7 +287,6 @@ DrawingAlgos="*res://src/Autoload/DrawingAlgos.gd"
 Tools="*res://src/Autoload/Tools.gd"
 Html5FileExchange="*res://src/Autoload/HTML5FileExchange.gd"
 Export="*res://src/Autoload/Export.gd"
-Palettes="*res://src/Autoload/Palettes.gd"
 Keychain="*res://addons/keychain/Keychain.gd"
 ExtensionsApi="*res://src/Autoload/ExtensionsAPI.gd"
 
