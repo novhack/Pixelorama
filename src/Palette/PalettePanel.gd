@@ -7,6 +7,8 @@ var palettes_id_path := {}
 var edited_swatch_index := -1
 var edited_swatch_color := Color.transparent
 
+var palette_tools := []
+
 onready var palette_select := $"%PaletteSelect"
 onready var palette_grid := $"%PaletteGrid"
 onready var palette_scroll := $"%PaletteScroll"
@@ -19,6 +21,8 @@ onready var create_palette_dialog := $"%CreatePaletteDialog"
 
 # Color picker button itself is hidden but it's popup is used to edit color swatches
 onready var hidden_color_picker := $"%HiddenColorPickerButton"
+
+onready var palette_tools_buttons := $"%PaletteToolsButtons"
 
 onready var palettes_logic = load("res://src/Palette/Palettes.gd").new()
 
@@ -101,6 +105,10 @@ func toggle_add_delete_buttons() -> void:
 		delete_color_button.mouse_default_cursor_shape = CURSOR_FORBIDDEN
 	else:
 		delete_color_button.mouse_default_cursor_shape = CURSOR_POINTING_HAND
+
+
+func add_palette_tool_button(button):
+	palette_tools_buttons.add_child(button)
 
 
 func _on_AddPalette_pressed() -> void:
@@ -228,7 +236,3 @@ func _color_changed(_color: Color, button: int) -> void:
 			palettes_logic.right_selected_color = -1
 
 		palette_grid.unselect_swatch(button, swatch_to_unselect)
-
-
-func _on_ColorMatchingModeButton_toggled(button_pressed):
-	print("color matching is: ", button_pressed)
