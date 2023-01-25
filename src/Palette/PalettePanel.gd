@@ -6,6 +6,7 @@ var palettes_id_path := {}
 
 var edited_swatch_index := -1
 var edited_swatch_color := Color.transparent
+var swatch_was_edited := false
 
 var palette_tools := []
 
@@ -203,6 +204,7 @@ func _on_PaletteGrid_swatch_pressed(mouse_button: int, index: int) -> void:
 
 func _on_ColorPicker_color_changed(color: Color) -> void:
 	if edited_swatch_index != -1:
+		swatch_was_edited = true
 		edited_swatch_color = color
 		palette_grid.set_swatch_color(edited_swatch_index, color)
 
@@ -214,7 +216,9 @@ func _on_ColorPicker_color_changed(color: Color) -> void:
 
 func _on_HiddenColorPickerButton_popup_closed():
 	# Saves edited swatch to palette file when color selection dialog is closed
-	palettes_logic.current_palette_set_color(edited_swatch_index, edited_swatch_color)
+	if swatch_was_edited:
+		palettes_logic.current_palette_set_color(edited_swatch_index, edited_swatch_color)
+	swatch_was_edited = false
 
 
 func _on_EditPaletteDialog_deleted() -> void:
