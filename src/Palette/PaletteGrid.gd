@@ -25,9 +25,10 @@ func set_palette(new_palette: Palette) -> void:
 	# Only display valid palette objects
 	if not new_palette:
 		return
-
+	# If palette changed reset grid window size
+	if current_palette != new_palette:
+		grid_window_origin = Vector2.ZERO
 	current_palette = new_palette
-	grid_window_origin = Vector2.ZERO
 
 
 func setup_swatches() -> void:
