@@ -27,6 +27,8 @@ onready var palette_tools_buttons := $"%PaletteToolsButtons"
 
 onready var palettes_logic = load("res://src/Palette/Palettes.gd").new()
 
+onready var color_matching_mode_tool = load("res://src/Palette/PaletteTools/ColorMatchingMode.gd")
+
 func _ready() -> void:
 	palettes_logic.load_palettes()
 
@@ -41,6 +43,8 @@ func _ready() -> void:
 
 	# Hide presets from color picker
 	hidden_color_picker.get_picker().presets_visible = false
+
+	load_palette_tools()
 
 
 # Setup palettes selector with available palettes
@@ -108,7 +112,11 @@ func toggle_add_delete_buttons() -> void:
 		delete_color_button.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 
 
-func add_palette_tool_button(button):
+func load_palette_tools() -> void:
+	palette_tools.push_back(color_matching_mode_tool.new(self))
+
+
+func add_palette_tool_button(button) -> void:
 	palette_tools_buttons.add_child(button)
 
 
@@ -214,7 +222,7 @@ func _on_ColorPicker_color_changed(color: Color) -> void:
 			Tools.assign_color(color, BUTTON_RIGHT)
 
 
-func _on_HiddenColorPickerButton_popup_closed():
+func _on_HiddenColorPickerButton_popup_closed() -> void:
 	# Saves edited swatch to palette file when color selection dialog is closed
 	if swatch_was_edited:
 		palettes_logic.current_palette_set_color(edited_swatch_index, edited_swatch_color)
